@@ -13,6 +13,7 @@ namespace HRM.Models
             Departments = new HashSet<DepartmentDAO>();
             Districts = new HashSet<DistrictDAO>();
             Employees = new HashSet<EmployeeDAO>();
+            InterviewResults = new HashSet<InterviewResultDAO>();
             JobPositions = new HashSet<JobPositionDAO>();
             Provinces = new HashSet<ProvinceDAO>();
             Villages = new HashSet<VillageDAO>();
@@ -28,6 +29,7 @@ namespace HRM.Models
         public virtual ICollection<DepartmentDAO> Departments { get; set; }
         public virtual ICollection<DistrictDAO> Districts { get; set; }
         public virtual ICollection<EmployeeDAO> Employees { get; set; }
+        public virtual ICollection<InterviewResultDAO> InterviewResults { get; set; }
         public virtual ICollection<JobPositionDAO> JobPositions { get; set; }
         public virtual ICollection<ProvinceDAO> Provinces { get; set; }
         public virtual ICollection<VillageDAO> Villages { get; set; }

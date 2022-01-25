@@ -14,6 +14,7 @@ namespace HRM.Models
         public string FullName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        public DateTime Birthday { get; set; }
         public long? StatusId { get; set; }
         public bool Used { get; set; }
         public long? VillageId { get; set; }
@@ -22,7 +23,6 @@ namespace HRM.Models
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
-        public DateTime? Birthday { get; set; }
 
         public virtual DistrictDAO District { get; set; }
         public virtual ProvinceDAO Province { get; set; }

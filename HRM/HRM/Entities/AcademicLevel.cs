@@ -7,20 +7,20 @@ using TrueSight.Common;
 
 namespace HRM.Entities
 {
-    public class ChucVu : DataEntity, IEquatable<ChucVu>
+    public class AcademicLevel : DataEntity, IEquatable<AcademicLevel>
     {
         public long Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
         public long? StatusId { get; set; }
-        public bool Used { get; set; }
+        public bool? Used { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
+
         public Status Status { get; set; }
 
-
-        public bool Equals(ChucVu other)
+        public bool Equals(AcademicLevel other)
         {
             if (other == null) return false;
             if (this.Id != other.Id) return false;
@@ -31,34 +31,31 @@ namespace HRM.Entities
 
             return true;
         }
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode();
-        }
     }
 
-    public class ChucVuFilter : FilterEntity
+    public class AcademicLevelFilter : FilterEntity
     {
-        public IdFilter Id { get; set; }
-        public StringFilter Name { get; set; }
-        public StringFilter Code { get; set; }
-        public IdFilter StatusId { get; set; }
-        public List<ChucVuFilter> OrFilter { get; set; }
-        public ChucVuOrder OrderBy { get; set; }
-        public ChucVuSelect Selects { get; set; }
+        public long Id { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public long? StatusId { get; set; }
+
+        public List<AcademicLevelFilter> OrFilter { get; set; }
+        public AcademicLevelOrder OrderBy { get; set; }
+        public AcademicLevelSelect Selects { get; set; }
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ChucVuOrder
+    public enum AcademicLevelOrder
     {
         Id = 0,
         Name = 1,
         Code = 2,
-        Status = 3,
+        Status = 3
     }
 
     [Flags]
-    public enum ChucVuSelect : long
+    public enum AcademicLevelSelect : long
     {
         ALL = E.ALL,
         Id = E._0,
@@ -66,4 +63,5 @@ namespace HRM.Entities
         Code = E._2,
         Status = E._3
     }
+
 }

@@ -35,13 +35,11 @@ namespace HRM.Models
         {
             modelBuilder.Entity<AcademicLevelDAO>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Code).HasMaxLength(1);
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
-                entity.Property(e => e.DeleteddAt).HasColumnType("datetime");
+                entity.Property(e => e.DeletedAt).HasColumnType("datetime");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -57,8 +55,6 @@ namespace HRM.Models
 
             modelBuilder.Entity<CandidateDAO>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Birthday).HasColumnType("datetime");
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
@@ -102,8 +98,6 @@ namespace HRM.Models
 
             modelBuilder.Entity<ChucVuDAO>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Code)
                     .IsRequired()
                     .HasMaxLength(255);
@@ -126,8 +120,6 @@ namespace HRM.Models
 
             modelBuilder.Entity<DepartmentDAO>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Code)
                     .IsRequired()
                     .HasMaxLength(1);
@@ -169,27 +161,31 @@ namespace HRM.Models
 
             modelBuilder.Entity<DistrictDAO>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Code).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
+                entity.Property(e => e.DeletedAt).HasColumnType("datetime");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);
 
+                entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+
                 entity.HasOne(d => d.Province)
                     .WithMany(p => p.Districts)
                     .HasForeignKey(d => d.ProvinceId)
-                    .HasConstraintName("FK__District__Provin__4AB81AF0");
+                    .HasConstraintName("FK__District__Provin__4CA06362");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Districts)
                     .HasForeignKey(d => d.StatusId)
-                    .HasConstraintName("FK__District__Status__4BAC3F29");
+                    .HasConstraintName("FK__District__Status__4D94879B");
             });
 
             modelBuilder.Entity<EmployeeDAO>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.BeginJobTime).HasColumnType("datetime");
 
                 entity.Property(e => e.Birthday).HasColumnType("datetime");
@@ -227,9 +223,9 @@ namespace HRM.Models
                     .HasForeignKey(d => d.DistrictId)
                     .HasConstraintName("FK__Employee__Distri__3C69FB99");
 
-                entity.HasOne(d => d.JobPositionNavigation)
+                entity.HasOne(d => d.JobPosition)
                     .WithMany(p => p.Employees)
-                    .HasForeignKey(d => d.JobPosition)
+                    .HasForeignKey(d => d.JobPositionId)
                     .HasConstraintName("FK__Employee__JobPos__3A81B327");
 
                 entity.HasOne(d => d.Province)
@@ -250,8 +246,6 @@ namespace HRM.Models
 
             modelBuilder.Entity<InterviewResultDAO>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.BeginJobTime).HasColumnType("datetime");
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
@@ -267,13 +261,16 @@ namespace HRM.Models
                 entity.HasOne(d => d.Candidate)
                     .WithMany(p => p.InterviewResults)
                     .HasForeignKey(d => d.CandidateId)
-                    .HasConstraintName("InterviewResult_Candidate_Id_fk");
+                    .HasConstraintName("FK__Interview__Candi__48CFD27E");
+
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.InterviewResults)
+                    .HasForeignKey(d => d.StatusId)
+                    .HasConstraintName("FK__Interview__Statu__49C3F6B7");
             });
 
             modelBuilder.Entity<JobPositionDAO>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Code).HasMaxLength(1);
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
@@ -294,14 +291,22 @@ namespace HRM.Models
 
             modelBuilder.Entity<ProvinceDAO>(entity =>
             {
+                entity.Property(e => e.Code).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
+                entity.Property(e => e.DeletedAt).HasColumnType("datetime");
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);
 
+                entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Provinces)
                     .HasForeignKey(d => d.StatusId)
-                    .HasConstraintName("FK__Province__Status__4CA06362");
+                    .HasConstraintName("FK__Province__Status__4E88ABD4");
             });
 
             modelBuilder.Entity<StatusDAO>(entity =>
@@ -317,21 +322,27 @@ namespace HRM.Models
 
             modelBuilder.Entity<VillageDAO>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Code).HasMaxLength(255);
+
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
+                entity.Property(e => e.DeletedAt).HasColumnType("datetime");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255);
 
+                entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+
                 entity.HasOne(d => d.District)
                     .WithMany(p => p.Villages)
                     .HasForeignKey(d => d.DistrictId)
-                    .HasConstraintName("FK__Village__Distric__48CFD27E");
+                    .HasConstraintName("FK__Village__Distric__4AB81AF0");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Villages)
                     .HasForeignKey(d => d.StatusId)
-                    .HasConstraintName("FK__Village__StatusI__49C3F6B7");
+                    .HasConstraintName("FK__Village__StatusI__4BAC3F29");
             });
 
             OnModelCreatingPartial(modelBuilder);

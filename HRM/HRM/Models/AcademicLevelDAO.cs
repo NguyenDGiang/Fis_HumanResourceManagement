@@ -17,7 +17,7 @@ namespace HRM.Models
         public bool? Used { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public DateTime? DeleteddAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
         public virtual StatusDAO Status { get; set; }
         public virtual ICollection<EmployeeDAO> Employees { get; set; }

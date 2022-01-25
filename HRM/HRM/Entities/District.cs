@@ -7,63 +7,62 @@ using TrueSight.Common;
 
 namespace HRM.Entities
 {
-    public class ChucVu : DataEntity, IEquatable<ChucVu>
+    public class District : DataEntity, IEquatable<District>
     {
         public long Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+        public long? ProvinceId { get; set; }
         public long? StatusId { get; set; }
         public bool Used { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
+
+        public Province Province { get; set; }
         public Status Status { get; set; }
+        public List<Candidate> Candidates { get; set; }
+        public List<Department> Departments { get; set; }
+        public List<Employee> Employees { get; set; }
+        public List<Village> Villages { get; set; }
 
-
-        public bool Equals(ChucVu other)
+        public bool Equals(District other)
         {
-            if (other == null) return false;
-            if (this.Id != other.Id) return false;
-            if (this.Name != other.Name) return false;
-            if (this.Code != other.Code) return false;
-            if (this.StatusId != other.StatusId) return false;
-            if (this.Used != other.Used) return false;
-
-            return true;
-        }
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode();
+            return other != null && this.Id == other.Id;
         }
     }
 
-    public class ChucVuFilter : FilterEntity
+    public class DistrictFilter : FilterEntity
     {
         public IdFilter Id { get; set; }
         public StringFilter Name { get; set; }
         public StringFilter Code { get; set; }
+        public IdFilter ProvinceId { get; set; }
         public IdFilter StatusId { get; set; }
-        public List<ChucVuFilter> OrFilter { get; set; }
-        public ChucVuOrder OrderBy { get; set; }
-        public ChucVuSelect Selects { get; set; }
+
+        public List<DistrictFilter> OrFilter { get; set; }
+        public DistrictOrder OrderBy { get; set; }
+        public DistrictSelect Selects { get; set; }
+
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ChucVuOrder
+    public enum DistrictOrder
     {
         Id = 0,
         Name = 1,
         Code = 2,
-        Status = 3,
+        Province = 3,
+        Status = 4,
     }
 
-    [Flags]
-    public enum ChucVuSelect : long
+    public enum DistrictSelect : long
     {
         ALL = E.ALL,
         Id = E._0,
         Name = E._1,
         Code = E._2,
-        Status = E._3
+        Province = E._3,
+        Status = E._4,
     }
 }
