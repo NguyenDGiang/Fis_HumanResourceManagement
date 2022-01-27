@@ -50,7 +50,7 @@ namespace HRM.Entities
         public StringFilter FullName { get; set; }
         public StringFilter Email { get; set; }
         public StringFilter PhoneNumber { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateFilter Birthday { get; set; }
         public IdFilter StatusId { get; set; }
         public bool Used { get; set; }
         public IdFilter VillageId { get; set; }
@@ -72,9 +72,10 @@ namespace HRM.Entities
         PhoneNumber = 3,
         Birthday = 4,
         Status = 5,
-        Village = 6,
-        District = 7,
-        Province = 8,
+        Used = 6,
+        Village = 7,
+        District = 8,
+        Province = 9,
 
     }
 
@@ -88,9 +89,10 @@ namespace HRM.Entities
         PhoneNumber = E._3,
         Birthday = E._4,
         Status = E._5,
-        Village = E._6,
-        District = E._7,
-        Province = E._8,
+        Used = E._6,
+        Village = E._7,
+        District = E._8,
+        Province = E._9,
     }
 
 }
