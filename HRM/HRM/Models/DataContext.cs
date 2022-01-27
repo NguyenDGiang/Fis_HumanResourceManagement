@@ -1,4 +1,4 @@
-﻿using System;using Thinktecture;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 

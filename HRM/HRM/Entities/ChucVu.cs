@@ -46,6 +46,7 @@ namespace HRM.Entities
         public List<ChucVuFilter> OrFilter { get; set; }
         public ChucVuOrder OrderBy { get; set; }
         public ChucVuSelect Selects { get; set; }
+        public string Search { get; set;}
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
@@ -55,6 +56,7 @@ namespace HRM.Entities
         Name = 1,
         Code = 2,
         Status = 3,
+        Used = 4,
     }
 
     [Flags]
@@ -64,6 +66,7 @@ namespace HRM.Entities
         Id = E._0,
         Name = E._1,
         Code = E._2,
-        Status = E._3
+        Status = E._3,
+        Used = E._4,
     }
 }
