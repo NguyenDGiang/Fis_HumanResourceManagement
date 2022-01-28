@@ -46,20 +46,20 @@ namespace HRM.Entities
         }
     }
 
-    public class DepartmentFilter
+    public class DepartmentFilter : FilterEntity
     {
         public IdFilter Id { get; set; }
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string PhoneNumber { get; set; }
-        public long? StatusId { get; set; }
+        public StringFilter Name { get; set; }
+        public StringFilter Code { get; set; }
+        public StringFilter PhoneNumber { get; set; }
+        public IdFilter? StatusId { get; set; }
         public bool Used { get; set; }
         public IdFilter VillageId { get; set; }
         public IdFilter DistrictId { get; set; }
         public IdFilter ProvinceId { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public DateTime? DeletedAt { get; set; }
+        public DateFilter CreatedAt { get; set; }
+        public DateFilter UpdatedAt { get; set; }
+        public DateFilter DeletedAt { get; set; }
 
         public List<DepartmentFilter> OrFilter { get; set; }
         public DepartmentOrder OrderBy { get; set; }
@@ -77,6 +77,7 @@ namespace HRM.Entities
         Village = 5,
         District = 6,
         Province = 7,
+        Used = 8,
 
     }
 
@@ -91,7 +92,8 @@ namespace HRM.Entities
         Status = E._4,
         Village = E._5,
         District = E._6,
-        Province = E._7
+        Province = E._7,
+        Used = E._8,
 
     }
 

@@ -35,10 +35,11 @@ namespace HRM.Entities
 
     public class AcademicLevelFilter : FilterEntity
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public long? StatusId { get; set; }
+        public IdFilter Id { get; set; }
+        public StringFilter Name { get; set; }
+        public StringFilter Code { get; set; }
+        public IdFilter StatusId { get; set; }
+        public bool? Used { get; set; }
 
         public List<AcademicLevelFilter> OrFilter { get; set; }
         public AcademicLevelOrder OrderBy { get; set; }
@@ -51,7 +52,8 @@ namespace HRM.Entities
         Id = 0,
         Name = 1,
         Code = 2,
-        Status = 3
+        Status = 3,
+        Used = 4,
     }
 
     [Flags]
@@ -61,7 +63,8 @@ namespace HRM.Entities
         Id = E._0,
         Name = E._1,
         Code = E._2,
-        Status = E._3
+        Status = E._3,
+        Used = E._4,
     }
 
 }
