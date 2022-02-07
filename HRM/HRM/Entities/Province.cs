@@ -13,8 +13,6 @@ namespace HRM.Entities
         public string Name { get; set; }
         public string Code { get; set; }
         public long? StatusId { get; set; }
-        public Guid RowId { get; set; }
-
         public bool Used { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
