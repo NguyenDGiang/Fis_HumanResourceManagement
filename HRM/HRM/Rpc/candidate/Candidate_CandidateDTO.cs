@@ -12,7 +12,6 @@ namespace HRM.Rpc.candidate
         public string PhoneNumber { get; set; }
         public DateTime Birthday { get; set; }
         public long? StatusId { get; set; }
-        public bool Used { get; set; }
         public long? VillageId { get; set; }
         public long? DistrictId { get; set; }
         public long? ProvinceId { get; set; }
@@ -35,6 +34,7 @@ namespace HRM.Rpc.candidate
             StatusId = Candidate.StatusId;
             DistrictId = Candidate.DistrictId;
             VillageId = Candidate.VillageId;
+            ProvinceId = Candidate.ProvinceId;
             Status = new Candidate_StatusDTO(Candidate.Status);
             Village = new Candidate_VillageDTO(Candidate.Village);
             District = new Candidate_DistrictDTO(Candidate.District);

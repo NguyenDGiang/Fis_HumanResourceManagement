@@ -17,9 +17,9 @@ namespace HRM.Rpc.chucvu
             this.ChucVuService = ChucVuService;
         }
 
-        [Route(ChucVuRoute.Count)]
+        [Route(ChucVuRoute.Count), HttpPost]
 
-        public async Task<ActionResult<int>> Count(ChucVu_ChucVuFilterDTO ChucVu_ChucVuFilterDTO)
+        public async Task<ActionResult<int>> Count([FromBody] ChucVu_ChucVuFilterDTO ChucVu_ChucVuFilterDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -31,9 +31,9 @@ namespace HRM.Rpc.chucvu
             return count;
         }
 
-        [Route(ChucVuRoute.Create)]
+        [Route(ChucVuRoute.Create), HttpPost]
 
-        public async Task<ActionResult<ChucVu_ChucVuDTO>> Create(ChucVu_ChucVuDTO ChucVu_ChucVuDTO)
+        public async Task<ActionResult<ChucVu_ChucVuDTO>> Create([FromBody] ChucVu_ChucVuDTO ChucVu_ChucVuDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -49,9 +49,9 @@ namespace HRM.Rpc.chucvu
                 return BadRequest(ChucVu_ChucVuDTO);
         }
 
-        [Route(ChucVuRoute.Get)]
+        [Route(ChucVuRoute.Get), HttpPost]
 
-        public async Task<ActionResult<ChucVu_ChucVuDTO>> Get(ChucVu_ChucVuDTO ChucVu_ChucVuDTO)
+        public async Task<ActionResult<ChucVu_ChucVuDTO>> Get([FromBody] ChucVu_ChucVuDTO ChucVu_ChucVuDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -60,8 +60,8 @@ namespace HRM.Rpc.chucvu
             return new ChucVu_ChucVuDTO(ChucVu);
         }
 
-        [Route(ChucVuRoute.List)]
-        public async Task<ActionResult<List<ChucVu_ChucVuDTO>>> List(ChucVu_ChucVuFilterDTO ChucVu_ChucVuFilterDTO)
+        [Route(ChucVuRoute.List), HttpPost]
+        public async Task<ActionResult<List<ChucVu_ChucVuDTO>>> List([FromBody] ChucVu_ChucVuFilterDTO ChucVu_ChucVuFilterDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -74,8 +74,8 @@ namespace HRM.Rpc.chucvu
             return ChucVu_ChucVuDTOs;
         }
 
-        [Route(ChucVuRoute.Update)]
-        public async Task<ActionResult<ChucVu_ChucVuDTO>> Update(ChucVu_ChucVuDTO ChucVu_ChucVuDTO)
+        [Route(ChucVuRoute.Update), HttpPost]
+        public async Task<ActionResult<ChucVu_ChucVuDTO>> Update([FromBody] ChucVu_ChucVuDTO ChucVu_ChucVuDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -87,9 +87,9 @@ namespace HRM.Rpc.chucvu
             return ChucVu_ChucVuDTO;
         }
 
-        [Route(ChucVuRoute.Delete)]
+        [Route(ChucVuRoute.Delete), HttpPost]
 
-        public async Task<ActionResult<ChucVu_ChucVuDTO>> Delete(ChucVu_ChucVuDTO ChucVu_ChucVuDTO)
+        public async Task<ActionResult<ChucVu_ChucVuDTO>> Delete([FromBody] ChucVu_ChucVuDTO ChucVu_ChucVuDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -106,8 +106,8 @@ namespace HRM.Rpc.chucvu
 
         }
 
-        [Route(ChucVuRoute.BulkDelete)]
-        public async Task<ActionResult<bool>> BulkDelete(List<long> Ids)
+        [Route(ChucVuRoute.BulkDelete), HttpPost]
+        public async Task<ActionResult<bool>> BulkDelete([FromBody] List<long> Ids)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);

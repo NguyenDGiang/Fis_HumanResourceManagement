@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System;using Thinktecture;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;
@@ -42,6 +42,7 @@ namespace HRM.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ConfigureTempTable<long>();
             modelBuilder.Entity<AcademicLevelDAO>(entity =>
             {
                 entity.Property(e => e.Code).HasMaxLength(1);

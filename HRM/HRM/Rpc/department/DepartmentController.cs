@@ -15,8 +15,8 @@ namespace HRM.Rpc.department
         {
             this.DepartmentService = DepartmentService;
         }
-        [Route(DepartmentRoute.Count)]
-        public async Task<ActionResult<int>> Count(Department_DepartmentFilterDTO Department_DepartmentFilterDTO)
+        [Route(DepartmentRoute.Count), HttpPost]
+        public async Task<ActionResult<int>> Count([FromBody] Department_DepartmentFilterDTO Department_DepartmentFilterDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -29,8 +29,8 @@ namespace HRM.Rpc.department
             return result;
         }
 
-        [Route(DepartmentRoute.Create)]
-        public async Task<ActionResult<Department_DepartmentDTO>> Create(Department_DepartmentDTO Department_DepartmentDTO)
+        [Route(DepartmentRoute.Create), HttpPost]
+        public async Task<ActionResult<Department_DepartmentDTO>> Create([FromBody] Department_DepartmentDTO Department_DepartmentDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -45,8 +45,8 @@ namespace HRM.Rpc.department
                 return BadRequest(Department_DepartmentDTO);
         }
 
-        [Route(DepartmentRoute.Get)]
-        public async Task<ActionResult<Department_DepartmentDTO>> Get(Department_DepartmentDTO Department_DepartmentDTO)
+        [Route(DepartmentRoute.Get), HttpPost]
+        public async Task<ActionResult<Department_DepartmentDTO>> Get([FromBody] Department_DepartmentDTO Department_DepartmentDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -56,8 +56,8 @@ namespace HRM.Rpc.department
             return new Department_DepartmentDTO(Department);
         }
 
-        [Route(DepartmentRoute.List)]
-        public async Task<ActionResult<List<Department_DepartmentDTO>>> List(Department_DepartmentFilterDTO Department_DepartmentFilterDTO)
+        [Route(DepartmentRoute.List), HttpPost]
+        public async Task<ActionResult<List<Department_DepartmentDTO>>> List([FromBody] Department_DepartmentFilterDTO Department_DepartmentFilterDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -70,8 +70,8 @@ namespace HRM.Rpc.department
             return Department_DepartmentDTOs;
         }
 
-        [Route(DepartmentRoute.Update)]
-        public async Task<ActionResult<Department_DepartmentDTO>> Update(Department_DepartmentDTO Department_DepartmentDTO)
+        [Route(DepartmentRoute.Update), HttpPost]
+        public async Task<ActionResult<Department_DepartmentDTO>> Update([FromBody] Department_DepartmentDTO Department_DepartmentDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -82,8 +82,8 @@ namespace HRM.Rpc.department
             return new Department_DepartmentDTO(Department);
         }
 
-        [Route(DepartmentRoute.Delete)]
-        public async Task<ActionResult<Department_DepartmentDTO>> Delete(Department_DepartmentDTO Department_DepartmentDTO)
+        [Route(DepartmentRoute.Delete), HttpPost]
+        public async Task<ActionResult<Department_DepartmentDTO>> Delete([FromBody] Department_DepartmentDTO Department_DepartmentDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -94,8 +94,8 @@ namespace HRM.Rpc.department
             return new Department_DepartmentDTO(Department);
         }
 
-        [Route(DepartmentRoute.BulkDelete)]
-        public async Task<ActionResult<bool>> BulkDelete(List<long> Ids)
+        [Route(DepartmentRoute.BulkDelete), HttpPost]
+        public async Task<ActionResult<bool>> BulkDelete([FromBody] List<long> Ids)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);

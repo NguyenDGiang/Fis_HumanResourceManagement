@@ -17,8 +17,8 @@ namespace HRM.Rpc.academic_level
             this.AcademicLevelService = AcademicLevelService;
         }
 
-        [Route(AcademicLevelRoute.Count)]
-        public async Task<ActionResult<int>> Count(AcademicLevel_AcademicLevelFilterDTO AcademicLevel_AcademicLevelFilterDTO)
+        [Route(AcademicLevelRoute.Count), HttpPost]
+        public async Task<ActionResult<int>> Count([FromBody] AcademicLevel_AcademicLevelFilterDTO AcademicLevel_AcademicLevelFilterDTO)
         {
             System.Console.WriteLine(JsonConvert.SerializeObject(AcademicLevel_AcademicLevelFilterDTO));
             if (!ModelState.IsValid)
@@ -33,8 +33,8 @@ namespace HRM.Rpc.academic_level
             return result;
         }
 
-        [Route(AcademicLevelRoute.Create)]
-        public async Task<ActionResult<AcademicLevel_AcademicLevelDTO>> Create(AcademicLevel_AcademicLevelDTO AcademicLevel_AcademicLevelDTO)
+        [Route(AcademicLevelRoute.Create), HttpPost]
+        public async Task<ActionResult<AcademicLevel_AcademicLevelDTO>> Create([FromBody] AcademicLevel_AcademicLevelDTO AcademicLevel_AcademicLevelDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -49,8 +49,8 @@ namespace HRM.Rpc.academic_level
                 return BadRequest(AcademicLevel_AcademicLevelDTO);
         }
 
-        [Route(AcademicLevelRoute.Get)]
-        public async Task<ActionResult<AcademicLevel_AcademicLevelDTO>> Get(AcademicLevel_AcademicLevelDTO AcademicLevel_AcademicLevelDTO)
+        [Route(AcademicLevelRoute.Get), HttpPost]
+        public async Task<ActionResult<AcademicLevel_AcademicLevelDTO>> Get([FromBody] AcademicLevel_AcademicLevelDTO AcademicLevel_AcademicLevelDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -64,8 +64,8 @@ namespace HRM.Rpc.academic_level
 
         }
 
-        [Route(AcademicLevelRoute.List)]
-        public async Task<ActionResult<List<AcademicLevel_AcademicLevelDTO>>> List(AcademicLevel_AcademicLevelFilterDTO AcademicLevel_AcademicLevelFilterDTO)
+        [Route(AcademicLevelRoute.List), HttpPost]
+        public async Task<ActionResult<List<AcademicLevel_AcademicLevelDTO>>> List([FromBody] AcademicLevel_AcademicLevelFilterDTO AcademicLevel_AcademicLevelFilterDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -78,8 +78,8 @@ namespace HRM.Rpc.academic_level
             return AcademicLevel_AcademicLevelDTOs;
         }
 
-        [Route(AcademicLevelRoute.Update)]
-        public async Task<ActionResult<AcademicLevel_AcademicLevelDTO>> Update(AcademicLevel_AcademicLevelDTO AcademicLevel_AcademicLevelDTO)
+        [Route(AcademicLevelRoute.Update), HttpPost]
+        public async Task<ActionResult<AcademicLevel_AcademicLevelDTO>> Update([FromBody] AcademicLevel_AcademicLevelDTO AcademicLevel_AcademicLevelDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -90,8 +90,8 @@ namespace HRM.Rpc.academic_level
             return new AcademicLevel_AcademicLevelDTO(AcademicLevel);
         }
 
-        [Route(AcademicLevelRoute.Delete)]
-        public async Task<ActionResult<AcademicLevel_AcademicLevelDTO>> Delete(AcademicLevel_AcademicLevelDTO AcademicLevel_AcademicLevelDTO)
+        [Route(AcademicLevelRoute.Delete), HttpPost]
+        public async Task<ActionResult<AcademicLevel_AcademicLevelDTO>> Delete([FromBody] AcademicLevel_AcademicLevelDTO AcademicLevel_AcademicLevelDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
@@ -102,7 +102,7 @@ namespace HRM.Rpc.academic_level
             return new AcademicLevel_AcademicLevelDTO(AcademicLevel);
         }
 
-        [Route(AcademicLevelRoute.BulkDelete)]
+        [Route(AcademicLevelRoute.BulkDelete), HttpPost]
         public async Task<ActionResult<bool>> BulkDelete(List<long> Ids)
         {
             System.Console.WriteLine("ids:" + JsonConvert.SerializeObject(Ids));

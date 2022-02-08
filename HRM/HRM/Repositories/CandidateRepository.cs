@@ -64,7 +64,7 @@ namespace HRM.Repositories
             CandidateDAO.PhoneNumber = Candidate.PhoneNumber;
             CandidateDAO.Birthday = Candidate.Birthday;
             CandidateDAO.StatusId = Candidate.StatusId;
-            CandidateDAO.Used = Candidate.Used;
+            CandidateDAO.Used = false;
             CandidateDAO.VillageId = Candidate.VillageId;
             CandidateDAO.DistrictId = Candidate.DistrictId;
             CandidateDAO.ProvinceId = Candidate.ProvinceId;
@@ -414,6 +414,7 @@ namespace HRM.Repositories
             query = query.Where(q => q.PhoneNumber, filter.PhoneNumber);
             query = query.Where(q => q.Birthday, filter.Birthday);
             query = query.Where(q => q.StatusId, filter.StatusId);
+            query = OrFilter(query, filter);
 
             return query;
         }

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using HRM.Entities;
 using HRM.Services.MCandidate;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TrueSight.Common;
 
 namespace HRM.Rpc.candidate
@@ -16,12 +17,12 @@ namespace HRM.Rpc.candidate
             this.CandidateService = CandidateService;
         }
 
-        [Route(CandidateRoute.Count)]
-        public async Task<ActionResult<int>> Count(Candidate_CandidateFilterDTO Candidate_CandidateFilterDTO)
+        [Route(CandidateRoute.Count), HttpPost]
+        public async Task<ActionResult<int>> Count([FromBody] Candidate_CandidateFilterDTO Candidate_CandidateFilterDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
-            
+
             CandidateFilter CandidateFilter = ConvertFilterDTOToFilterEntity(Candidate_CandidateFilterDTO);
             CandidateFilter = CandidateService.ToFilter(CandidateFilter);
 
@@ -30,13 +31,13 @@ namespace HRM.Rpc.candidate
             return result;
         }
 
-        [Route(CandidateRoute.Create)]
-        public async Task<ActionResult<Candidate_CandidateDTO>> Create(Candidate_CandidateDTO Candidate_CandidateDTO)
+        [Route(CandidateRoute.Create), HttpPost]
+        public async Task<ActionResult<Candidate_CandidateDTO>> Create([FromBody] Candidate_CandidateDTO Candidate_CandidateDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
 
-                 Candidate Candidate = ConvertDTOToEntity(Candidate_CandidateDTO);
+            Candidate Candidate = ConvertDTOToEntity(Candidate_CandidateDTO);
             Candidate = await CandidateService.Create(Candidate);
             Candidate_CandidateDTO = new Candidate_CandidateDTO(Candidate);
 
@@ -46,62 +47,66 @@ namespace HRM.Rpc.candidate
                 return BadRequest(Candidate_CandidateDTO);
         }
 
-        [Route(CandidateRoute.Get)]
-        public async Task<ActionResult<Candidate_CandidateDTO>> Get(Candidate_CandidateDTO Candidate_CandidateDTO)
+        [Route(CandidateRoute.Get), HttpPost]
+        public async Task<ActionResult<Candidate_CandidateDTO>> Get([FromBody] Candidate_CandidateDTO Candidate_CandidateDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
-                 Candidate Candidate = ConvertDTOToEntity(Candidate_CandidateDTO);
+            Candidate Candidate = ConvertDTOToEntity(Candidate_CandidateDTO);
             Candidate = await CandidateService.Get(Candidate.Id);
 
             return new Candidate_CandidateDTO(Candidate);
         }
 
-        [Route(CandidateRoute.List)]
-        public async Task<ActionResult<List<Candidate_CandidateDTO>>> List(Candidate_CandidateFilterDTO Candidate_CandidateFilterDTO)
+        [Route(CandidateRoute.List), HttpPost]
+        public async Task<ActionResult<List<Candidate_CandidateDTO>>> List([FromBody] Candidate_CandidateFilterDTO Candidate_CandidateFilterDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
+            System.Console.WriteLine(JsonConvert.SerializeObject(Candidate_CandidateFilterDTO));
 
-                 CandidateFilter CandidateFilter = ConvertFilterDTOToFilterEntity(Candidate_CandidateFilterDTO);
+            CandidateFilter CandidateFilter = ConvertFilterDTOToFilterEntity(Candidate_CandidateFilterDTO);
             CandidateFilter = CandidateService.ToFilter(CandidateFilter);
             List<Candidate> Candidates = await CandidateService.List(CandidateFilter);
             List<Candidate_CandidateDTO> Candidate_CandidateDTOs = Candidates.Select(x => new Candidate_CandidateDTO(x)).ToList();
 
             return Candidate_CandidateDTOs;
+
         }
 
-        [Route(CandidateRoute.Update)]
-        public async Task<ActionResult<Candidate_CandidateDTO>> Update(Candidate_CandidateDTO Candidate_CandidateDTO)
+        [Route(CandidateRoute.Update), HttpPost]
+        public async Task<ActionResult<Candidate_CandidateDTO>> Update([FromBody] Candidate_CandidateDTO Candidate_CandidateDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
 
-                 Candidate Candidate = ConvertDTOToEntity(Candidate_CandidateDTO);
+            Candidate Candidate = ConvertDTOToEntity(Candidate_CandidateDTO);
             Candidate = await CandidateService.Update(Candidate);
 
             return new Candidate_CandidateDTO(Candidate);
         }
 
-        [Route(CandidateRoute.Delete)]
-        public async Task<ActionResult<Candidate_CandidateDTO>> Delete(Candidate_CandidateDTO Candidate_CandidateDTO)
+        [Route(CandidateRoute.Delete), HttpPost]
+        public async Task<ActionResult<Candidate_CandidateDTO>> Delete([FromBody] Candidate_CandidateDTO Candidate_CandidateDTO)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
 
-                 Candidate Candidate = ConvertDTOToEntity(Candidate_CandidateDTO);
+            Candidate Candidate = ConvertDTOToEntity(Candidate_CandidateDTO);
             Candidate = await CandidateService.Delete(Candidate);
+            // System.Console.WriteLine(JsonConvert.SerializeObject(Candidate));
 
             return new Candidate_CandidateDTO(Candidate);
         }
 
-        [Route(CandidateRoute.BulkDelete)]
-        public async Task<ActionResult<bool>> BulkDelete(List<long> Ids)
+        [Route(CandidateRoute.BulkDelete), HttpPost]
+        public async Task<ActionResult<bool>> BulkDelete([FromBody] List<long> Ids)
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
 
-                 CandidateFilter CandidateFilter = new CandidateFilter();
+            System.Console.WriteLine(JsonConvert.SerializeObject(Ids));
+            CandidateFilter CandidateFilter = new CandidateFilter();
             CandidateFilter = CandidateService.ToFilter(CandidateFilter);
             CandidateFilter.Id = new IdFilter { In = Ids };
             CandidateFilter.Selects = CandidateSelect.Id;
@@ -145,7 +150,11 @@ namespace HRM.Rpc.candidate
             Candidate.PhoneNumber = Candidate_CandidateDTO.PhoneNumber;
             Candidate.Birthday = Candidate_CandidateDTO.Birthday;
             Candidate.StatusId = Candidate_CandidateDTO.StatusId;
-            Candidate.Used = Candidate_CandidateDTO.Used;
+            Candidate.VillageId = Candidate_CandidateDTO.VillageId;
+            Candidate.DistrictId = Candidate_CandidateDTO.DistrictId;
+            Candidate.ProvinceId = Candidate_CandidateDTO.ProvinceId;
+
+            // Candidate.Used = Candidate_CandidateDTO.Used;
             Candidate.Status = Candidate_CandidateDTO.Status == null ? null : new Status
             {
                 Id = Candidate_CandidateDTO.Status.Id,

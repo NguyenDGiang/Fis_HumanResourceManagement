@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HRM.Entities;
 using HRM.Repositories;
+using Newtonsoft.Json;
 using TrueSight.Common;
 
 namespace HRM.Services.MCandidate
@@ -92,6 +93,8 @@ namespace HRM.Services.MCandidate
             try
             {
                 await UOW.CandidateRepository.Delete(Candidate);
+
+                Candidate = await UOW.CandidateRepository.Get(Candidate.Id);
                 return Candidate;
             }
             catch (System.Exception ex)
