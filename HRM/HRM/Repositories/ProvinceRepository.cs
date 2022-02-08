@@ -1,4 +1,5 @@
 ﻿using HRM.Entities;
+using HRM.Helpers;
 using HRM.Models;
 using System;
 using System.Collections.Generic;
@@ -127,6 +128,7 @@ namespace HRM.Repositories
                         Code = w.Code,
                     }).ToList(),
                 }).ToList(),
+
                 RowId = q.RowId,
                 Used = q.Used,
                 CreatedAt = q.CreatedAt,
@@ -178,6 +180,7 @@ namespace HRM.Repositories
             DateTime Now = StaticParams.DateTimeNow;
             Province.DeletedAt = Now;
             await DataContext.Province.Where(x => x.Id == Province.Id).UpdateFromQueryAsync(x => new ProvinceDAO { DeletedAt = Now });
+            // Province.RowId = DataContext.Province.Where(x => x.Id == Province.Id).Select(p => p.RowId).FirstOrDefault();
             Province.RowId = DataContext.Province.Where(x => x.Id == Province.Id).Select(p => p.RowId).FirstOrDefault();
             return true;
         }

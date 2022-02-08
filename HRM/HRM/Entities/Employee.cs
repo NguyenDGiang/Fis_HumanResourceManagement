@@ -48,8 +48,8 @@ namespace HRM.Entities
         public StringFilter FullName { get; set; }
         public StringFilter Email { get; set; }
         public StringFilter PhoneNumber { get; set; }
-        public DateTime Birthday { get; set; }
-        public DateTime BeginJobTime { get; set; }
+        public DateFilter Birthday { get; set; }
+        public DateFilter BeginJobTime { get; set; }
         public bool ContractStatus { get; set; }
         public IdFilter StatusId { get; set; }
         public IdFilter ChucVuId { get; set; }

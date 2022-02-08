@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HRM.Entities;
+using HRM.Helpers;
 using HRM.Models;
-using MDM.Helpers;
 using Microsoft.EntityFrameworkCore;
 using TrueSight.Common;
 namespace HRM.Repositories

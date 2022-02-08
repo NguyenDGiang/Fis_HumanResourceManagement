@@ -57,7 +57,7 @@ namespace HRM.Repositories
                 Name = AcademicLevel.Name,
                 Code = AcademicLevel.Code,
                 StatusId = AcademicLevel.StatusId,
-                Used = AcademicLevel.Used,
+                Used = false,
                 CreatedAt = StaticParams.DateTimeNow,
                 UpdatedAt = StaticParams.DateTimeNow
             };
@@ -147,7 +147,8 @@ namespace HRM.Repositories
         public async Task<bool> Update(AcademicLevel AcademicLevel)
         {
             AcademicLevelDAO AcademicLevelDAO = DataContext.AcademicLevel.Where(x => x.Id == AcademicLevel.Id).FirstOrDefault();
-
+            if (AcademicLevelDAO == null)
+                return false;
             AcademicLevelDAO.Id = AcademicLevel.Id;
             AcademicLevelDAO.Name = AcademicLevel.Name;
             AcademicLevelDAO.Code = AcademicLevel.Code;

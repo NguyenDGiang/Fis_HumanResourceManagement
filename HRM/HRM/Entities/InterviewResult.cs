@@ -34,10 +34,10 @@ namespace HRM.Entities
     {
         public IdFilter Id { get; set; }
         public IdFilter CandidateId { get; set; }
-        public DateTime InterviewTime { get; set; }
+        public DateFilter InterviewTime { get; set; }
         public bool PassInterview { get; set; }
-        public DateTime BeginJobTime { get; set; }
-        public DateTime TrialTime { get; set; }
+        public DateFilter BeginJobTime { get; set; }
+        public DateFilter TrialTime { get; set; }
         public IdFilter StatusId { get; set; }
         public bool Used { get; set; }
 
