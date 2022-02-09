@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HRM.Entities;
 using HRM.Helpers;
 using HRM.Models;
+using HRM.Models;
 using Microsoft.EntityFrameworkCore;
 using TrueSight.Common;
 namespace HRM.Repositories

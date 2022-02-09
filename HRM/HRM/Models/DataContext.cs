@@ -1,6 +1,7 @@
-﻿using System;
+﻿using System;using Thinktecture;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Logging;
 
 namespace HRM.Models
 {
@@ -29,10 +30,19 @@ namespace HRM.Models
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("data source=127.0.0.1\\\\\\\\LOCAL_SQL_SERVER,62192;initial catalog=HRM;persist security info=True;user id=sa2;password=123456;multipleactiveresultsets=True;");
             }
+
+             // Tạo ILoggerFactory
+            ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+
+            optionsBuilder       // thiết lập làm việc với SqlServer
+                        .UseLoggerFactory(loggerFactory);     // thiết lập logging
+
+                        
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ConfigureTempTable<long>();
             modelBuilder.Entity<AcademicLevelDAO>(entity =>
             {
                 entity.Property(e => e.Code).HasMaxLength(1);
