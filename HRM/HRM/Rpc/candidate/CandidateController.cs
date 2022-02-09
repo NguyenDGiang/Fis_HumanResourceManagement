@@ -34,6 +34,7 @@ namespace HRM.Rpc.candidate
         [Route(CandidateRoute.Create), HttpPost]
         public async Task<ActionResult<Candidate_CandidateDTO>> Create([FromBody] Candidate_CandidateDTO Candidate_CandidateDTO)
         {
+            System.Console.WriteLine(JsonConvert.SerializeObject(Candidate_CandidateDTO));
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
 
@@ -45,6 +46,9 @@ namespace HRM.Rpc.candidate
                 return Candidate_CandidateDTO;
             else
                 return BadRequest(Candidate_CandidateDTO);
+
+            // return Candidate_CandidateDTO;
+
         }
 
         [Route(CandidateRoute.Get), HttpPost]
@@ -53,7 +57,7 @@ namespace HRM.Rpc.candidate
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
             Candidate Candidate = ConvertDTOToEntity(Candidate_CandidateDTO);
-            Candidate = await CandidateService.Get(Candidate.Id);
+            Candidate = await CandidateService.Get(Candidate_CandidateDTO.Id);
 
             return new Candidate_CandidateDTO(Candidate);
         }

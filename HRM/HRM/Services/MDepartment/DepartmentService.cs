@@ -78,10 +78,11 @@ namespace HRM.Services.MDepartment
                 Department = await UOW.DepartmentRepository.Get(Department.Id);
                 return Department;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                System.Console.WriteLine(ex);
+                return Department;
 
-                throw;
             }
         }
 
