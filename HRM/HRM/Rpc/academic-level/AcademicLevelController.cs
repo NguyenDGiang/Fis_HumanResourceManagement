@@ -54,8 +54,8 @@ namespace HRM.Rpc.academic_level
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
-            if (!await HasPermission(AcademicLevel_AcademicLevelDTO.Id))
-                return Forbid();
+            // if (!await HasPermission(AcademicLevel_AcademicLevelDTO.Id))
+            //     return Forbid();
 
             AcademicLevel AcademicLevel = ConvertDTOToEntity(AcademicLevel_AcademicLevelDTO);
             AcademicLevel = await AcademicLevelService.Get(AcademicLevel.Id);
@@ -103,7 +103,7 @@ namespace HRM.Rpc.academic_level
         }
 
         [Route(AcademicLevelRoute.BulkDelete), HttpPost]
-        public async Task<ActionResult<bool>> BulkDelete(List<long> Ids)
+        public async Task<ActionResult<bool>> BulkDelete([FromBody] List<long> Ids)
         {
             System.Console.WriteLine("ids:" + JsonConvert.SerializeObject(Ids));
             AcademicLevelFilter AcademicLevelFilter = new AcademicLevelFilter();

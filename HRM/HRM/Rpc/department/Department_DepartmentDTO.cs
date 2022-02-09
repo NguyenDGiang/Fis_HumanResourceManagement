@@ -19,6 +19,11 @@ namespace HRM.Rpc.department
         public Department_ProvinceDTO Province { get; set; }
         public Department_StatusDTO Status { get; set; }
         public Department_VillageDTO Village { get; set; }
+
+        public Department_DepartmentDTO()
+        {
+            
+        }
         public Department_DepartmentDTO(Department Department)
         {
             Id = Department.Id;

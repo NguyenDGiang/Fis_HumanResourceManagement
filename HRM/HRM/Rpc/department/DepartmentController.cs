@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using HRM.Entities;
 using HRM.Services.MDepartment;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TrueSight.Common;
 
 namespace HRM.Rpc.department
@@ -43,6 +44,8 @@ namespace HRM.Rpc.department
                 return Department_DepartmentDTO;
             else
                 return BadRequest(Department_DepartmentDTO);
+
+                // return Department_DepartmentDTO;
         }
 
         [Route(DepartmentRoute.Get), HttpPost]
@@ -141,7 +144,11 @@ namespace HRM.Rpc.department
             Department.Id = Department_DepartmentDTO.Id;
             Department.Code = Department_DepartmentDTO.Code;
             Department.Name = Department_DepartmentDTO.Name;
+            Department.PhoneNumber = Department_DepartmentDTO.PhoneNumber;
             Department.StatusId = Department_DepartmentDTO.StatusId;
+            Department.ProvinceId = Department_DepartmentDTO.ProvinceId;
+            Department.DistrictId = Department_DepartmentDTO.DistrictId;
+            Department.VillageId = Department_DepartmentDTO.VillageId;
             Department.Status = Department_DepartmentDTO.Status == null ? null : new Status
             {
                 Id = Department_DepartmentDTO.Status.Id,
