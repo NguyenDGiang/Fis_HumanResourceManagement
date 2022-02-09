@@ -13,8 +13,6 @@ namespace HRM.Entities
         public string Name { get; set; }
         public string Code { get; set; }
         public long? StatusId { get; set; }
-        public Guid RowId { get; set; }
-
         public bool Used { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
@@ -60,7 +58,6 @@ namespace HRM.Entities
         Name = E._1,
         Code = E._2,
         Status = E._3,
-        Districts = E._4,
-        RowId = E._5
+        Districts = E._4
     }
 }

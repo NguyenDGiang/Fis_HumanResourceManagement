@@ -134,8 +134,6 @@ namespace HRM.Repositories
                     Code = q.Status.Code,
                     Name = q.Status.Name,
                 } : null,
-                // RowId = q.RowId,
-                RowId = q.RowId,
                 Used = q.Used,
                 CreatedAt = q.CreatedAt,
                 UpdatedAt = q.UpdatedAt,
@@ -162,8 +160,6 @@ namespace HRM.Repositories
 
         public async Task<bool> Create(Village Village)
         {
-            // Village.RowId = Guid.NewGuid();
-            Village.RowId = Guid.NewGuid();
             VillageDAO VillageDAO = new VillageDAO();
             VillageDAO.Id = Village.Id;
             VillageDAO.Code = Village.Code;
@@ -173,7 +169,6 @@ namespace HRM.Repositories
             VillageDAO.CreatedAt = StaticParams.DateTimeNow;
             VillageDAO.UpdatedAt = StaticParams.DateTimeNow;
             VillageDAO.Used = false;
-            VillageDAO.RowId = Village.RowId;
             DataContext.Village.Add(VillageDAO);
             await DataContext.SaveChangesAsync();
             Village.Id = VillageDAO.Id;
@@ -185,9 +180,7 @@ namespace HRM.Repositories
         {
             DateTime Now = StaticParams.DateTimeNow;
             Village.DeletedAt = Now;
-            await DataContext.Village.Where(x => x.Id == Village.Id).UpdateFromQueryAsync(x => new VillageDAO { DeletedAt = Now });1
-            // Village.RowId = DataContext.Village.Where(x => x.Id == Village.Id).Select(w => w.RowId).FirstOrDefault();
-            Village.RowId = DataContext.Village.Where(x => x.Id == Village.Id).Select(w => w.RowId).FirstOrDefault();
+            await DataContext.Village.Where(x => x.Id == Village.Id).UpdateFromQueryAsync(x => new VillageDAO { DeletedAt = Now });
             return true;
         }
 
@@ -205,7 +198,6 @@ namespace HRM.Repositories
                    CreatedAt = x.CreatedAt,
                    UpdatedAt = x.UpdatedAt,
                    DeletedAt = x.DeletedAt,
-                   RowId = x.RowId,
                    Used = x.Used,
                    District = x.District == null ? null : new District
                    {
@@ -253,7 +245,6 @@ namespace HRM.Repositories
                 Name = x.Name,
                 DistrictId = x.DistrictId,
                 StatusId = x.StatusId,
-                RowId = x.RowId,
                 Used = x.Used,
                 Status = x.Status == null ? null : new Status
                 {
@@ -280,7 +271,6 @@ namespace HRM.Repositories
             VillageDAO.StatusId = Village.StatusId;
             VillageDAO.UpdatedAt = StaticParams.DateTimeNow;
             await DataContext.SaveChangesAsync();
-            Village.RowId = VillageDAO.RowId;
             await SaveReference(Village);
             return true;
         }

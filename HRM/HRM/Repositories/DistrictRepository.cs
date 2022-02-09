@@ -133,9 +133,6 @@ namespace HRM.Repositories
                     Code = q.Status.Code,
                     Name = q.Status.Name,
                 } : null,
-
-                // RowId = q.RowId,
-                RowId = q.RowId,
                 Used = q.Used,
                 CreatedAt = q.CreatedAt,
                 UpdatedAt = q.UpdatedAt,
@@ -164,11 +161,6 @@ namespace HRM.Repositories
 
         public async Task<bool> Create(District District)
         {
-
-            // District.RowId = Guid.NewGuid();
-
-            District.RowId = Guid.NewGuid();
-
             DistrictDAO DistrictDAO = new DistrictDAO();
             DistrictDAO.Id = District.Id;
             DistrictDAO.Code = District.Code;
@@ -178,10 +170,6 @@ namespace HRM.Repositories
             DistrictDAO.CreatedAt = StaticParams.DateTimeNow;
             DistrictDAO.UpdatedAt = StaticParams.DateTimeNow;
             DistrictDAO.Used = false;
-
-            // DistrictDAO.RowId = District.RowId;
-
-            DistrictDAO.RowId = District.RowId;
 
             DataContext.District.Add(DistrictDAO);
             await DataContext.SaveChangesAsync();
@@ -194,11 +182,6 @@ namespace HRM.Repositories
             DateTime Now = StaticParams.DateTimeNow;
             District.DeletedAt = Now;
             await DataContext.District.Where(x => x.Id == District.Id).UpdateFromQueryAsync(x => new DistrictDAO { DeletedAt = Now });
-
-            // District.RowId = DataContext.District.Where(x => x.Id == District.Id).Select(d => d.RowId).FirstOrDefault();
-
-            District.RowId = DataContext.District.Where(x => x.Id == District.Id).Select(d => d.RowId).FirstOrDefault();
-
             return true;
         }
 
@@ -232,10 +215,6 @@ namespace HRM.Repositories
                 Name = x.Name,
                 ProvinceId = x.ProvinceId,
                 StatusId = x.StatusId,
-
-                // RowId = x.RowId,
-
-                RowId = x.RowId,
                 Used = x.Used,
                 Status = x.Status == null ? null : new Status
                 {
@@ -260,11 +239,6 @@ namespace HRM.Repositories
             DistrictDAO.StatusId = District.StatusId;
             DistrictDAO.UpdatedAt = StaticParams.DateTimeNow;
             await DataContext.SaveChangesAsync();
-
-            // District.RowId = DistrictDAO.RowId;
-
-            District.RowId = DistrictDAO.RowId;
-
             return true;
         }
 

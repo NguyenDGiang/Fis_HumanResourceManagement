@@ -22,8 +22,6 @@ namespace HRM.Models
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
-
-        public Guid RowId { get; set; }
         public virtual ProvinceDAO Province { get; set; }
         public virtual StatusDAO Status { get; set; }
         public virtual ICollection<CandidateDAO> Candidates { get; set; }
