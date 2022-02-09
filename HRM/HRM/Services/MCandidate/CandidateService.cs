@@ -25,12 +25,16 @@ namespace HRM.Services.MCandidate
     public class CandidateService : ICandidateService
     {
         private IUOW UOW;
-        public CandidateService(IUOW UOW)
+        private ICandidateValidator CandidateValidator;
+        public CandidateService(IUOW UOW, ICandidateValidator CandidateValidator)
         {
             this.UOW = UOW;
+            this.CandidateValidator = CandidateValidator;
         }
         public async Task<List<Candidate>> BulkDelete(List<Candidate> Candidates)
         {
+            if (!await CandidateValidator.BulkDelete(Candidates))
+                return Candidates;
             try
             {
                 await UOW.CandidateRepository.BulkDelete(Candidates);
@@ -74,6 +78,8 @@ namespace HRM.Services.MCandidate
 
         public async Task<Candidate> Create(Candidate Candidate)
         {
+            if (!await CandidateValidator.Create(Candidate))
+                return Candidate;
             try
             {
                 await UOW.CandidateRepository.Create(Candidate);
@@ -90,6 +96,11 @@ namespace HRM.Services.MCandidate
 
         public async Task<Candidate> Delete(Candidate Candidate)
         {
+            if (!await CandidateValidator.Delete(Candidate))
+            {
+                System.Console.WriteLine("delete Candidate fail");
+                return Candidate;
+            }
             try
             {
                 await UOW.CandidateRepository.Delete(Candidate);
@@ -134,7 +145,8 @@ namespace HRM.Services.MCandidate
 
         public async Task<Candidate> Update(Candidate Candidate)
         {
-
+            if (!await CandidateValidator.Update(Candidate))
+                return Candidate;
             try
             {
                 await UOW.CandidateRepository.Update(Candidate);

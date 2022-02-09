@@ -23,12 +23,16 @@ namespace HRM.Services.MAcademicLevel
     public class AcademicLevelService : IAcademicLevelService
     {
         private IUOW UOW;
-        public AcademicLevelService(IUOW UOW)
+        private IAcademicLevelValidator AcademicLevelValidator;
+        public AcademicLevelService(IUOW UOW, IAcademicLevelValidator AcademicLevelValidator)
         {
             this.UOW = UOW;
+            this.AcademicLevelValidator = AcademicLevelValidator;
         }
         public async Task<List<AcademicLevel>> BulkDelete(List<AcademicLevel> AcademicLevels)
         {
+            if (!await AcademicLevelValidator.BulkDelete(AcademicLevels))
+                return AcademicLevels;
             try
             {
                 await UOW.AcademicLevelRepository.BulkDelete(AcademicLevels);
@@ -72,6 +76,8 @@ namespace HRM.Services.MAcademicLevel
 
         public async Task<AcademicLevel> Create(AcademicLevel AcademicLevel)
         {
+            if (!await AcademicLevelValidator.Create(AcademicLevel))
+                return AcademicLevel;
             try
             {
                 await UOW.AcademicLevelRepository.Create(AcademicLevel);
@@ -87,6 +93,8 @@ namespace HRM.Services.MAcademicLevel
 
         public async Task<AcademicLevel> Delete(AcademicLevel AcademicLevel)
         {
+            if (!await AcademicLevelValidator.Delete(AcademicLevel))
+                return AcademicLevel;
             try
             {
                 await UOW.AcademicLevelRepository.Delete(AcademicLevel);
@@ -139,6 +147,9 @@ namespace HRM.Services.MAcademicLevel
 
         public async Task<AcademicLevel> Update(AcademicLevel AcademicLevel)
         {
+            if (!await AcademicLevelValidator.Update(AcademicLevel))
+                return AcademicLevel;
+
             try
             {
                 await UOW.AcademicLevelRepository.Update(AcademicLevel);
