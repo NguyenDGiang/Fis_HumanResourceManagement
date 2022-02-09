@@ -58,5 +58,7 @@ namespace HRM.Entities
         Name = E._1,
         Code = E._2,
         Status = E._3,
+        Districts = E._4,
+        RowId = E._5
     }
 }
