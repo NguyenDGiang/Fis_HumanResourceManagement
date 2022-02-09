@@ -22,7 +22,7 @@ namespace HRM.Rpc.department
 
         public Department_DepartmentDTO()
         {
-            
+
         }
         public Department_DepartmentDTO(Department Department)
         {
@@ -35,10 +35,10 @@ namespace HRM.Rpc.department
             VillageId = Department.VillageId;
             DistrictId = Department.DistrictId;
             ProvinceId = Department.ProvinceId;
-            Status = new Department_StatusDTO(Department.Status);
-            Village = new Department_VillageDTO(Department.Village);
-            District = new Department_DistrictDTO(Department.District);
-            Province = new Department_ProvinceDTO(Department.Province);
+            Status = Department.Status == null ? null : new Department_StatusDTO(Department.Status);
+            Village = Department.Village == null ? null : new Department_VillageDTO(Department.Village);
+            District = Department.District == null ? null : new Department_DistrictDTO(Department.District);
+            Province = Department.Province == null ? null : new Department_ProvinceDTO(Department.Province);
         }
     }
     public class Department_DepartmentFilterDTO : FilterDTO

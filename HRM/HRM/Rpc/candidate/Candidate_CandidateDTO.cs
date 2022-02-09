@@ -35,10 +35,10 @@ namespace HRM.Rpc.candidate
             DistrictId = Candidate.DistrictId;
             VillageId = Candidate.VillageId;
             ProvinceId = Candidate.ProvinceId;
-            Status = new Candidate_StatusDTO(Candidate.Status);
-            Village = new Candidate_VillageDTO(Candidate.Village);
-            District = new Candidate_DistrictDTO(Candidate.District);
-            Province = new Candidate_ProvinceDTO(Candidate.Province);
+            Status = Candidate.Status == null ? null : new Candidate_StatusDTO(Candidate.Status);
+            Village = Candidate.Village == null ? null : new Candidate_VillageDTO(Candidate.Village);
+            District = Candidate.District == null ? null : new Candidate_DistrictDTO(Candidate.District);
+            Province = Candidate.Province == null ? null : new Candidate_ProvinceDTO(Candidate.Province);
         }
     }
 
