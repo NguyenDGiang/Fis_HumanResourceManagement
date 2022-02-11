@@ -25,13 +25,17 @@ namespace HRM.Services.MChucVu
     public class ChucVuService : IChucVuService
     {
         private IUOW UOW;
-        public ChucVuService(IUOW UOW)
+        private IChucVuValidator ChucVuValidator;
+        public ChucVuService(IUOW UOW, IChucVuValidator ChucVuValidator)
         {
             this.UOW = UOW;
+            this.ChucVuValidator = ChucVuValidator;
         }
 
         public async Task<List<ChucVu>> BulkDelete(List<ChucVu> ChucVus)
         {
+            if (!await ChucVuValidator.BulkDelete(ChucVus))
+                return ChucVus;
             try
             {
                 await UOW.ChucVuRepository.BulkDelete(ChucVus);
@@ -75,6 +79,8 @@ namespace HRM.Services.MChucVu
 
         public async Task<ChucVu> Create(ChucVu ChucVu)
         {
+            if (!await ChucVuValidator.Create(ChucVu))
+                return ChucVu;
             try
             {
                 await UOW.ChucVuRepository.Create(ChucVu);
@@ -92,6 +98,8 @@ namespace HRM.Services.MChucVu
 
         public async Task<ChucVu> Delete(ChucVu ChucVu)
         {
+            if (!await ChucVuValidator.Delete(ChucVu))
+                return ChucVu;
             try
             {
                 await UOW.ChucVuRepository.Delete(ChucVu);
@@ -139,6 +147,8 @@ namespace HRM.Services.MChucVu
 
         public async Task<ChucVu> Update(ChucVu ChucVu)
         {
+            if (!await ChucVuValidator.Update(ChucVu))
+                return ChucVu;
             try
             {
                 await UOW.ChucVuRepository.Update(ChucVu);

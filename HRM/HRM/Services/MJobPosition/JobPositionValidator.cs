@@ -11,7 +11,7 @@ namespace HRM.Services.MJobPosition
         Task<bool> Update(JobPosition JobPosition);
         Task<bool> Delete(JobPosition JobPosition);
     }
-    public class JobPositionValidator:IJobPositionValidator
+    public class JobPositionValidator : IJobPositionValidator
     {
         public enum ErrorCode
         {
@@ -79,7 +79,7 @@ namespace HRM.Services.MJobPosition
         private async Task<bool> ValidateName(JobPosition JobPosition)
         {
             var oldData = await UOW.JobPositionRepository.Get(JobPosition.Id);
-            if (oldData != null && oldData.Used)
+            if (oldData != null && oldData.Used == true)
             {
                 if (oldData.Name != JobPosition.Name)
                     JobPosition.AddError(nameof(JobPositionValidator), nameof(JobPosition.Id), ErrorCode.JobPositionInUsed);

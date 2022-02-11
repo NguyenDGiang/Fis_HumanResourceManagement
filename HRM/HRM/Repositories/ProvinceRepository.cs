@@ -128,7 +128,6 @@ namespace HRM.Repositories
                         Code = w.Code,
                     }).ToList(),
                 }).ToList(),
-                RowId = q.RowId,
                 Used = q.Used,
                 CreatedAt = q.CreatedAt,
                 UpdatedAt = q.UpdatedAt,
@@ -156,7 +155,6 @@ namespace HRM.Repositories
         public async Task<bool> Create(Province Province)
         {
 
-            Province.RowId = Guid.NewGuid();
             ProvinceDAO ProvinceDAO = new ProvinceDAO();
             ProvinceDAO.Id = Province.Id;
             ProvinceDAO.Code = Province.Code;
@@ -165,7 +163,6 @@ namespace HRM.Repositories
             ProvinceDAO.CreatedAt = StaticParams.DateTimeNow;
             ProvinceDAO.UpdatedAt = StaticParams.DateTimeNow;
             ProvinceDAO.Used = false;
-            ProvinceDAO.RowId = Province.RowId;
             DataContext.Province.Add(ProvinceDAO);
             await DataContext.SaveChangesAsync();
             Province.Id = ProvinceDAO.Id;
@@ -180,8 +177,6 @@ namespace HRM.Repositories
             DateTime Now = StaticParams.DateTimeNow;
             Province.DeletedAt = Now;
             await DataContext.Province.Where(x => x.Id == Province.Id).UpdateFromQueryAsync(x => new ProvinceDAO { DeletedAt = Now });
-            // Province.RowId = DataContext.Province.Where(x => x.Id == Province.Id).Select(p => p.RowId).FirstOrDefault();
-            Province.RowId = DataContext.Province.Where(x => x.Id == Province.Id).Select(p => p.RowId).FirstOrDefault();
             return true;
         }
 
@@ -198,7 +193,6 @@ namespace HRM.Repositories
                     CreatedAt = x.CreatedAt,
                     UpdatedAt = x.UpdatedAt,
                     DeletedAt = x.DeletedAt,
-                    RowId = x.RowId,
                     Used = x.Used,
                     Status = x.Status == null ? null : new Status
                     {
@@ -238,7 +232,6 @@ namespace HRM.Repositories
                 Code = x.Code,
                 Name = x.Name,
                 StatusId = x.StatusId,
-                RowId = x.RowId,
                 Used = x.Used,
                 Status = x.Status == null ? null : new Status
                 {
@@ -261,7 +254,6 @@ namespace HRM.Repositories
             ProvinceDAO.StatusId = Province.StatusId;
             ProvinceDAO.UpdatedAt = StaticParams.DateTimeNow;
             await DataContext.SaveChangesAsync();
-            Province.RowId = ProvinceDAO.RowId;
             await SaveReference(Province);
             return true;
         }
