@@ -1,4 +1,5 @@
-﻿using HRM.Entities;
+using HRM.Entities;
+using HRM.Helpers;
 using HRM.Models;
 using System;
 using System.Collections.Generic;
@@ -133,6 +134,7 @@ namespace HRM.Repositories
                     Code = q.Status.Code,
                     Name = q.Status.Name,
                 } : null,
+                // RowId = q.RowId,
                 RowId = q.RowId,
                 Used = q.Used,
                 CreatedAt = q.CreatedAt,
@@ -160,6 +162,7 @@ namespace HRM.Repositories
 
         public async Task<bool> Create(Village Village)
         {
+            // Village.RowId = Guid.NewGuid();
             Village.RowId = Guid.NewGuid();
             VillageDAO VillageDAO = new VillageDAO();
             VillageDAO.Id = Village.Id;
@@ -182,7 +185,8 @@ namespace HRM.Repositories
         {
             DateTime Now = StaticParams.DateTimeNow;
             Village.DeletedAt = Now;
-            await DataContext.Village.Where(x => x.Id == Village.Id).UpdateFromQueryAsync(x => new VillageDAO { DeletedAt = Now });
+            await DataContext.Village.Where(x => x.Id == Village.Id).UpdateFromQueryAsync(x => new VillageDAO { DeletedAt = Now });1
+            // Village.RowId = DataContext.Village.Where(x => x.Id == Village.Id).Select(w => w.RowId).FirstOrDefault();
             Village.RowId = DataContext.Village.Where(x => x.Id == Village.Id).Select(w => w.RowId).FirstOrDefault();
             return true;
         }

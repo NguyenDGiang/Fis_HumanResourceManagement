@@ -52,7 +52,7 @@ namespace HRM.Entities
         public StringFilter Name { get; set; }
         public StringFilter Code { get; set; }
         public StringFilter PhoneNumber { get; set; }
-        public IdFilter? StatusId { get; set; }
+        public IdFilter StatusId { get; set; }
         public bool Used { get; set; }
         public IdFilter VillageId { get; set; }
         public IdFilter DistrictId { get; set; }
