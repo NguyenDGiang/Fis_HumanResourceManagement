@@ -1,12 +1,14 @@
 ﻿using HRM.Entities;
 using HRM.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TrueSight.Common;
 
 namespace HRM.Services.MJobPosition
 {
-    public interface IJobPositionService
+    public interface IJobPositionService : IServiceScoped
     {
         Task<int> Count(JobPositionFilter JobPositionFilter);
         Task<List<JobPosition>> List(JobPositionFilter JobPositionFilter);
@@ -33,18 +35,26 @@ namespace HRM.Services.MJobPosition
 
         public async Task<JobPosition> Create(JobPosition JobPosition)
         {
-            if (!await JobPositionValidator.Create(JobPosition))
+            try
+            {
+                await UOW.JobPositionRepository.Create(JobPosition);
+                JobPosition = await UOW.JobPositionRepository.Get(JobPosition.Id);
+
                 return JobPosition;
-            await UOW.JobPositionRepository.Create(JobPosition);
-            List<JobPosition> JobPositions = await UOW.JobPositionRepository.List(new List<long> { JobPosition.Id });
-            JobPosition = JobPositions.FirstOrDefault();
-            return JobPosition;
+            }
+            catch (System.Exception ex)
+            {
+
+                System.Console.WriteLine("JobPositionervice -> Create: " + ex);
+                throw;
+            }
         }
 
         public async Task<JobPosition> Delete(JobPosition JobPosition)
         {
             if (!await JobPositionValidator.Delete(JobPosition))
                 return JobPosition;
+            await UOW.JobPositionRepository.Delete(JobPosition);
             List<JobPosition> JobPositions = await UOW.JobPositionRepository.List(new List<long> { JobPosition.Id });
             JobPosition = JobPositions.FirstOrDefault();
             return JobPosition;
@@ -73,11 +83,19 @@ namespace HRM.Services.MJobPosition
         {
             if (!await JobPositionValidator.Update(JobPosition))
                 return JobPosition;
-            var oldData = await UOW.JobPositionRepository.Get(JobPosition.Id);
-            await UOW.JobPositionRepository.Update(JobPosition);
-            List<JobPosition> JobPositions = await UOW.JobPositionRepository.List(new List<long> { JobPosition.Id });
-            JobPosition = JobPositions.FirstOrDefault();
-            return JobPosition;
+            try
+            {
+                var oldData = await UOW.JobPositionRepository.Get(JobPosition.Id);
+                await UOW.JobPositionRepository.Update(JobPosition);
+                List<JobPosition> JobPositions = await UOW.JobPositionRepository.List(new List<long> { JobPosition.Id });
+                JobPosition = JobPositions.FirstOrDefault();
+                return JobPosition;
+            }
+            catch(Exception ex)
+            {
+                System.Console.WriteLine("IJobPositionService" + ex.Message);
+            }
+            return null;
 
         }
     }

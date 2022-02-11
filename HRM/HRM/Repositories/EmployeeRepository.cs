@@ -1,10 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HRM.Entities;
 using HRM.Helpers;
-using HRM.Models;
 using HRM.Models;
 using Microsoft.EntityFrameworkCore;
 using TrueSight.Common;
@@ -13,19 +12,14 @@ namespace HRM.Repositories
 {
     public interface IEmployeeRepository
     {
-        Task<int> Count(EmployeeFilter employeeFilter);
-        Task<List<Employee>> List(EmployeeFilter employeeFilter);
+        Task<int> Count(EmployeeFilter filter);
+        Task<List<Employee>> List(EmployeeFilter filter);
         Task<List<Employee>> List(List<long> Ids);
         Task<Employee> Get(long Id);
-        Task<bool> Create(Employee employee);
-        Task<bool> Update(Employee employee);
-        Task<bool> BulkInsertNewEmployee(List<Employee> employees);
-        Task<bool> BulkDeleteNewEmployee(List<Employee> employees);
-        Task<bool> Delete(Employee employee);
-        Task<bool> SimpleBulkMerge(List<Employee> employees);
-        Task<bool> BulkMerge(List<Employee> employees);
-        Task<bool> BulkDelete(List<Employee> employees);
-        Task<bool> BulkUpdate(List<Employee> employees);
+        Task<bool> Create(Employee Employee);
+        Task<bool> Update(Employee Employee);
+        Task<bool> Delete(Employee Employee);
+        Task<bool> BulkDelete(List<Employee> Employees);
         Task<bool> Used(List<long> Ids);
     }
 
@@ -66,23 +60,23 @@ namespace HRM.Repositories
             foreach (EmployeeFilter EmployeeFilter in filter.OrFilter)
             {
                 IQueryable<EmployeeDAO> queryable = query;
-                queryable = queryable.Where(q => q.Id, filter.Id);
-                queryable = queryable.Where(q => q.FullName, filter.FullName);
-                queryable = queryable.Where(q => q.Email, filter.Email);
-                queryable = queryable.Where(q => q.PhoneNumber, filter.PhoneNumber);
-                queryable = queryable.Where(q => q.Birthday, filter.Birthday);
-                queryable = queryable.Where(q => q.BeginJobTime, filter.BeginJobTime);
-                queryable = queryable.Where(q => q.ContractStatus, filter.ContractStatus);
-                queryable = queryable.Where(q => q.StatusId, filter.StatusId);
-                queryable = queryable.Where(q => q.ChucVuId, filter.ChucVuId);
-                queryable = queryable.Where(q => q.AcademicLevelId, filter.AcademicLevelId);
-                queryable = queryable.Where(q => q.VillageId, filter.VillageId);
-                queryable = queryable.Where(q => q.JobPositionId, filter.JobPositionId);
-                queryable = queryable.Where(q => q.DistrictId, filter.DistrictId);
-                queryable = queryable.Where(q => q.ProvinceId, filter.ProvinceId);
+                queryable = queryable.Where(q => q.Id, EmployeeFilter.Id);
+                queryable = queryable.Where(q => q.FullName, EmployeeFilter.FullName);
+                queryable = queryable.Where(q => q.Email, EmployeeFilter.Email);
+                queryable = queryable.Where(q => q.PhoneNumber, EmployeeFilter.PhoneNumber);
+                queryable = queryable.Where(q => q.Birthday, EmployeeFilter.Birthday);
+                queryable = queryable.Where(q => q.BeginJobTime, EmployeeFilter.BeginJobTime);
+                queryable = queryable.Where(q => q.ContractStatus, EmployeeFilter.ContractStatus);
+                queryable = queryable.Where(q => q.StatusId, EmployeeFilter.StatusId);
+                queryable = queryable.Where(q => q.ChucVuId, EmployeeFilter.ChucVuId);
+                queryable = queryable.Where(q => q.AcademicLevelId, EmployeeFilter.AcademicLevelId);
+                queryable = queryable.Where(q => q.VillageId, EmployeeFilter.VillageId);
+                queryable = queryable.Where(q => q.JobPositionId, EmployeeFilter.JobPositionId);
+                queryable = queryable.Where(q => q.DistrictId, EmployeeFilter.DistrictId);
+                queryable = queryable.Where(q => q.ProvinceId, EmployeeFilter.ProvinceId);
                 initQuery = initQuery.Union(queryable);
             }
-            return query;
+            return initQuery;
         }
         private IQueryable<EmployeeDAO> DynamicOrder(IQueryable<EmployeeDAO> query, EmployeeFilter filter)
         {
@@ -260,31 +254,12 @@ namespace HRM.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> BulkDeleteNewEmployee(List<Employee> employees)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<bool> BulkInsertNewEmployee(List<Employee> employees)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<bool> BulkMerge(List<Employee> employees)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<bool> BulkUpdate(List<Employee> employees)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<int> Count(EmployeeFilter EmployeeFilter)
+        public async Task<int> Count(EmployeeFilter filter)
         {
             IQueryable<EmployeeDAO> Employees = DataContext.Employee;
-            Employees = DynamicFilter(Employees, EmployeeFilter);
-            return Employees.CountAsync();
+            Employees = DynamicFilter(Employees, filter);
+            int result = await Employees.CountAsync();
+            return result;
         }
 
         public async Task<bool> Create(Employee Employee)
@@ -483,10 +458,7 @@ namespace HRM.Repositories
             return Employees;
         }
 
-        public Task<bool> SimpleBulkMerge(List<Employee> employees)
-        {
-            throw new System.NotImplementedException();
-        }
+       
 
         public async Task<bool> Update(Employee Employee)
         {

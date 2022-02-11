@@ -1,13 +1,14 @@
 ﻿using HRM.Entities;
 using HRM.Repositories;
-using HRM.Services.MEmployee;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TrueSight.Common;
 
 namespace HRM.Services.MInterviewResult
 {
-    public interface IInterviewResultService
+    public interface IInterviewResultService :IServiceScoped
     {
         Task<int> Count(InterviewResultFilter InterviewResultFilter);
         Task<List<InterviewResult>> List(InterviewResultFilter InterviewResultFilter);
@@ -33,19 +34,27 @@ namespace HRM.Services.MInterviewResult
         }
 
         public async Task<InterviewResult> Create(InterviewResult InterviewResult)
-        {
-            if (!await InterviewResultValidator.Create(InterviewResult))
+        {    if (!await InterviewResultValidator.Create(InterviewResult))
+                 return InterviewResult;
+            try
+            {
+                
+                await UOW.InterviewResultRepository.Create(InterviewResult);
+                InterviewResult = await UOW.InterviewResultRepository.Get(InterviewResult.Id);
                 return InterviewResult;
-            await UOW.InterviewResultRepository.Create(InterviewResult);
-            List<InterviewResult> InterviewResults = await UOW.InterviewResultRepository.List(new List<long> { InterviewResult.Id });
-            InterviewResult = InterviewResults.FirstOrDefault();
-            return InterviewResult;
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine("IEmployeeService: " + ex.Message);
+            }
+            return null;
         }
 
         public async Task<InterviewResult> Delete(InterviewResult InterviewResult)
         {
             if (!await InterviewResultValidator.Delete(InterviewResult))
                 return InterviewResult;
+            await UOW.InterviewResultRepository.Delete(InterviewResult);
             List<InterviewResult> InterviewResults = await UOW.InterviewResultRepository.List(new List<long> { InterviewResult.Id });
             InterviewResult = InterviewResults.FirstOrDefault();
             return InterviewResult;
@@ -74,12 +83,22 @@ namespace HRM.Services.MInterviewResult
         {
             if (!await InterviewResultValidator.Update(InterviewResult))
                 return InterviewResult;
-            var oldData = await UOW.InterviewResultRepository.Get(InterviewResult.Id);
-            await UOW.InterviewResultRepository.Update(InterviewResult);
-            List<InterviewResult> InterviewResults = await UOW.InterviewResultRepository.List(new List<long> { InterviewResult.Id });
-            InterviewResult = InterviewResults.FirstOrDefault();
-            return InterviewResult;
+            try
+            {
+                var oldData = await UOW.InterviewResultRepository.Get(InterviewResult.Id);
+                await UOW.InterviewResultRepository.Update(InterviewResult);
+                List<InterviewResult> InterviewResults = await UOW.InterviewResultRepository.List(new List<long> { InterviewResult.Id });
+                InterviewResult = InterviewResults.FirstOrDefault();
+                return InterviewResult;
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine("IInterviewResulteService" + ex.Message);
+            }
+            return null;
 
         }
+
+       
     }
 }

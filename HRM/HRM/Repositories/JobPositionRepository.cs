@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using HRM.Entities;
 using HRM.Helpers;
 using HRM.Models;
-using HRM.Models;
 using Microsoft.EntityFrameworkCore;
 using TrueSight.Common;
 namespace HRM.Repositories
@@ -48,13 +47,13 @@ namespace HRM.Repositories
             foreach (JobPositionFilter JobPositionFilter in filter.OrFilter)
             {
                 IQueryable<JobPositionDAO> queryable = query;
-                query = query.Where(q => q.Id, filter.Id);
-                query = query.Where(q => q.Name, filter.Name);
-                query = query.Where(q => q.Code, filter.Code);
-                query = query.Where(q => q.StatusId, filter.StatusId);
+                query = query.Where(q => q.Id, JobPositionFilter.Id);
+                query = query.Where(q => q.Name, JobPositionFilter.Name);
+                query = query.Where(q => q.Code, JobPositionFilter.Code);
+                query = query.Where(q => q.StatusId, JobPositionFilter.StatusId);
                 initQuery = initQuery.Union(queryable);
             }
-            return query;
+            return initQuery;
         }
         private IQueryable<JobPositionDAO> DynamicOrder(IQueryable<JobPositionDAO> query, JobPositionFilter filter)
         {
@@ -134,6 +133,7 @@ namespace HRM.Repositories
             JobPositionDAO.UpdatedAt = StaticParams.DateTimeNow;
             DataContext.JobPosition.Add(JobPositionDAO);
             await DataContext.SaveChangesAsync();
+            JobPosition.Id = JobPositionDAO.Id;
             return true;
         }
 
