@@ -53,12 +53,12 @@ namespace HRM.Tests
             DataContext = new DataContext(options);
             EntityFrameworkManager.ContextFactory = DbContext => new DataContext(options);
              Clean();
-              InitData();
+             InitData();
         }
 
-        public virtual void   InitData()
+        public void  InitData()
         {
-
+          
         }
 
 
