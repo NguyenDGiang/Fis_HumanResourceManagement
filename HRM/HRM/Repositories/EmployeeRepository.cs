@@ -482,7 +482,7 @@ namespace HRM.Repositories
             EmployeeDAO.Used = false;
             EmployeeDAO.UpdatedAt = StaticParams.DateTimeNow;
             await DataContext.SaveChangesAsync();
-                
+            Employee.Id = EmployeeDAO.Id;
             return true;
         }
 
