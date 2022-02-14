@@ -37,7 +37,7 @@ namespace HRM.Tests
 
         }
 
-        public async void Init()
+        public void Init()
         {
             System.Console.WriteLine("ctor CommonTests");
             _ = License.EfExtension;
