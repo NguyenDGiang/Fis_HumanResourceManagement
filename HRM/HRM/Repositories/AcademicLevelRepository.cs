@@ -92,13 +92,15 @@ namespace HRM.Repositories
                 Code = x.Code,
                 StatusId = x.StatusId,
                 Used = x.Used,
-
+                CreatedAt = x.CreatedAt,
+                UpdatedAt = x.UpdatedAt,
                 Status = x.Status == null ? null : new Status
                 {
                     Id = x.Status.Id,
                     Name = x.Status.Name,
                     Code = x.Status.Code,
                 }
+
             }
             ).FirstOrDefaultAsync();
 
@@ -132,7 +134,8 @@ namespace HRM.Repositories
                 Code = x.Code,
                 StatusId = x.StatusId,
                 Used = x.Used,
-
+                CreatedAt = x.CreatedAt,
+                UpdatedAt = x.UpdatedAt,
                 Status = x.Status == null ? null : new Status
                 {
                     Id = x.Status.Id,
