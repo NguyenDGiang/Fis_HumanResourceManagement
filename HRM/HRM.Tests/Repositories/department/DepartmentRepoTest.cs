@@ -73,6 +73,14 @@ namespace HRM.Tests.Repositories.department
             await Then_ListFilterDepartment_Success();
         }
 
+        [Test]
+        public async Task Department_GetListDepartment_Success()
+        {
+            await LoadData();
+            await When_GetListDepartment_Success();
+            await Then_GetListDepartment_Success();
+        }
+
 
     }
 }

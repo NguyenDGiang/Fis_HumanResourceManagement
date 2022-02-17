@@ -63,7 +63,7 @@ namespace HRM.Tests.Repositories.department
         }
         private async Task When_BulkDeleteDepartment_Success()
         {
-            List<long> Ids = new List<long>() { 1, 2, 3 };
+            List<long> Ids = new List<long>() { 1, 2, 3,20 };
             Departments = Ids.Select(id => new Department
             {
                 Id = id
@@ -99,6 +99,12 @@ namespace HRM.Tests.Repositories.department
                 Selects = DepartmentSelect.ALL
             };
             Departments = await repository.List(filter);
+        }
+
+        private async Task When_GetListDepartment_Success()
+        {
+            Ids = new List<long>() { 1,2,3,20 };
+            Departments = await repository.List(Ids);
         }
     }
 }
