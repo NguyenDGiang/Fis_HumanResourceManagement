@@ -39,7 +39,7 @@ namespace HRM.Rpc.academic_level
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
             if (!await HasPermission(AcademicLevel_AcademicLevelDTO.Id))
-                return Forbid();
+                return StatusCode(403);
 
             AcademicLevel AcademicLevel = ConvertDTOToEntity(AcademicLevel_AcademicLevelDTO);
             AcademicLevel = await AcademicLevelService.Create(AcademicLevel);
@@ -86,7 +86,7 @@ namespace HRM.Rpc.academic_level
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
             if (!await HasPermission(AcademicLevel_AcademicLevelDTO.Id))
-                return Forbid();
+               return StatusCode(403);
 
             AcademicLevel AcademicLevel = ConvertDTOToEntity(AcademicLevel_AcademicLevelDTO);
             AcademicLevel = await AcademicLevelService.Update(AcademicLevel);
@@ -100,7 +100,7 @@ namespace HRM.Rpc.academic_level
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
             if (!await HasPermission(AcademicLevel_AcademicLevelDTO.Id))
-                return Forbid();
+                return StatusCode(403);
 
             AcademicLevel AcademicLevel = ConvertDTOToEntity(AcademicLevel_AcademicLevelDTO);
             AcademicLevel = await AcademicLevelService.Delete(AcademicLevel);
