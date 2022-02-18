@@ -45,29 +45,29 @@ namespace HRM.Tests.Repositories.chuc_vu
             Assert.IsNotNull(Output);
             Assert.IsNotNull(Output.DeletedAt);
         }
- 
+
 
         public async Task Then_ListOrderByChucVu_Success()
         {
             IQueryable<ChucVuDAO> query = DataContext.ChucVu.AsNoTracking();
             query = DynamicOrder(query, ChucVuFilter);
-           
+
 
             List<ChucVu> OutputChucVus = await query.Select(q => new ChucVu()
-                {
-                    Id = ChucVuFilter.Selects.Contains(ChucVuSelect.Id) ? q.Id : default(long),
-                    Code = ChucVuFilter.Selects.Contains(ChucVuSelect.Code) ? q.Code : default(string),
-                    Name = ChucVuFilter.Selects.Contains(ChucVuSelect.Name) ? q.Name : default(string),
-                    Used = ChucVuFilter.Selects.Contains(ChucVuSelect.Used) ? q.Used : default(bool),
-                    StatusId = ChucVuFilter.Selects.Contains(ChucVuSelect.Status) ? q.StatusId : default(long),
+            {
+                Id = ChucVuFilter.Selects.Contains(ChucVuSelect.Id) ? q.Id : default(long),
+                Code = ChucVuFilter.Selects.Contains(ChucVuSelect.Code) ? q.Code : default(string),
+                Name = ChucVuFilter.Selects.Contains(ChucVuSelect.Name) ? q.Name : default(string),
+                Used = ChucVuFilter.Selects.Contains(ChucVuSelect.Used) ? q.Used : default(bool),
+                StatusId = ChucVuFilter.Selects.Contains(ChucVuSelect.Status) ? q.StatusId : default(long),
 
-                    Status = ChucVuFilter.Selects.Contains(ChucVuSelect.Status) && q.Status != null ? new Status
-                    {
-                        Id = q.Status.Id,
-                        Name = q.Status.Name,
-                        Code = q.Status.Code
-                    } : null
-                }).ToListAsync();
+                Status = ChucVuFilter.Selects.Contains(ChucVuSelect.Status) && q.Status != null ? new Status
+                {
+                    Id = q.Status.Id,
+                    Name = q.Status.Name,
+                    Code = q.Status.Code
+                } : null
+            }).ToListAsync();
 
             Assert.AreEqual(OutputChucVus.Count(), ChucVus.Count());
             if (ChucVus.Count() == OutputChucVus.Count())
@@ -80,7 +80,7 @@ namespace HRM.Tests.Repositories.chuc_vu
                     //System.Console.WriteLine($"ChucVu {i}: " + JsonConvert.SerializeObject(ChucVus[i]));
                     Assert.IsTrue(OutputChucVus[i].Equals(ChucVus[i]));
                 }
-                
+
             }
         }
 
@@ -136,7 +136,7 @@ namespace HRM.Tests.Repositories.chuc_vu
         public async Task Then_BulkDeleteChucVu_Success()
         {
             List<long> Ids = ChucVus.Select(x => x.Id).ToList();
-            List<ChucVuDAO> Output =  await DataContext.ChucVu.Where(x => Ids.Contains(x.Id)).ToListAsync();
+            List<ChucVuDAO> Output = await DataContext.ChucVu.Where(x => Ids.Contains(x.Id)).ToListAsync();
 
             foreach (var item in Output)
             {

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bogus" Version="33.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.22" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
@@ -20,6 +21,15 @@
     <ItemGroup>
         <None Update="appsettings.json">
 	        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Repositories\academic-level\import_dev.xlsx">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Repositories\candidate\import_dev.xlsx">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Repositories\department\import_dev.xlsx">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 
