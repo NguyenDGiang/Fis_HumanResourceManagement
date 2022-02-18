@@ -5,13 +5,13 @@ using TrueSight.Common;
 
 namespace HRM.Services.MInterviewResult
 {
-    public interface IInterviewResultValidator
+    public interface IInterviewResultValidator : IServiceScoped
     {
         Task<bool> Create(InterviewResult InterviewResult);
         Task<bool> Update(InterviewResult InterviewResult);
         Task<bool> Delete(InterviewResult InterviewResult);
     }
-    public class InterviewResultValidator
+    public class InterviewResultValidator:IInterviewResultValidator
     {
         public enum ErrorCode
         {
@@ -20,11 +20,13 @@ namespace HRM.Services.MInterviewResult
             CandidateNotExisted
         }
         private IUOW UOW;
+
         public InterviewResultValidator(IUOW UOW)
         {
             this.UOW = UOW;
         }
-        private async Task<bool> ValidateId(InterviewResult InterviewResult)
+
+         private async Task<bool> ValidateId(InterviewResult InterviewResult)
         {
             InterviewResultFilter InterviewResultFilter = new InterviewResultFilter
             {
@@ -61,7 +63,7 @@ namespace HRM.Services.MInterviewResult
 
         public async Task<bool> Create(InterviewResult InterviewResult)
         {
-            await ValidateCandidate(InterviewResult);       
+            await ValidateCandidate(InterviewResult);
             return InterviewResult.IsValidated;
         }
 

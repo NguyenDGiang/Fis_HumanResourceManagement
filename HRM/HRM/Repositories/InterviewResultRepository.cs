@@ -1,10 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HRM.Entities;
 using HRM.Helpers;
-using HRM.Models;
 using HRM.Models;
 using Microsoft.EntityFrameworkCore;
 using TrueSight.Common;
@@ -52,15 +51,15 @@ namespace HRM.Repositories
             {
                 IQueryable<InterviewResultDAO> queryable = query;
                 queryable = queryable.Where(q => q.Id, filter.Id);
-                queryable = queryable.Where(q => q.CandidateId, filter.CandidateId);
-                queryable = queryable.Where(q => q.InterviewTime, filter.InterviewTime);
-                queryable = queryable.Where(q => q.PassInterview, filter.PassInterview);
-                queryable = queryable.Where(q => q.BeginJobTime, filter.BeginJobTime);
-                queryable = queryable.Where(q => q.TrialTime, filter.TrialTime);
-                queryable = queryable.Where(q => q.StatusId, filter.StatusId);
+                queryable = queryable.Where(q => q.CandidateId, InterviewResultFilter.CandidateId);
+                queryable = queryable.Where(q => q.InterviewTime, InterviewResultFilter.InterviewTime);
+                queryable = queryable.Where(q => q.PassInterview, InterviewResultFilter.PassInterview);
+                queryable = queryable.Where(q => q.BeginJobTime, InterviewResultFilter.BeginJobTime);
+                queryable = queryable.Where(q => q.TrialTime, InterviewResultFilter.TrialTime);
+                queryable = queryable.Where(q => q.StatusId, InterviewResultFilter.StatusId);
                 initQuery = initQuery.Union(queryable);
             }
-            return query;
+            return initQuery;
         }
         private IQueryable<InterviewResultDAO> DynamicOrder(IQueryable<InterviewResultDAO> query, InterviewResultFilter filter)
         {
@@ -196,7 +195,7 @@ namespace HRM.Repositories
 
                 }
             }).ToListAsync();
-
+            var x = InterviewResults;
             return InterviewResults;
         }
 
@@ -257,6 +256,7 @@ namespace HRM.Repositories
 
             DataContext.InterviewResult.Add(InterviewResultDAO);
             await DataContext.SaveChangesAsync();
+            InterviewResult.Id = InterviewResultDAO.Id;
             return true;
         }
 

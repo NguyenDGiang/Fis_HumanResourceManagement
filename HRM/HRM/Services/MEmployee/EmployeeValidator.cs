@@ -177,12 +177,9 @@ namespace HRM.Services.MEmployee
         public async Task<bool> Create(Employee Employee)
         {
             await ValidateName(Employee);
-            await ValidateDistrict(Employee);
             await ValidateAcademicLevel(Employee);
             await ValidateChucVu(Employee);
             await ValidateJobPosition(Employee);
-            await ValidateProvince(Employee);
-            await ValidateVillage(Employee);
             return Employee.IsValidated;
         }
 
@@ -201,12 +198,9 @@ namespace HRM.Services.MEmployee
             if (await ValidateId(Employee))
             {
                 await ValidateName(Employee);
-                await ValidateDistrict(Employee);
                 await ValidateAcademicLevel(Employee);
                 await ValidateChucVu(Employee);
                 await ValidateJobPosition(Employee);
-                await ValidateProvince(Employee);
-                await ValidateVillage(Employee);
             }
             return Employee.IsValidated;
         }

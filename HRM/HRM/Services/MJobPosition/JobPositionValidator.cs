@@ -5,13 +5,13 @@ using TrueSight.Common;
 
 namespace HRM.Services.MJobPosition
 {
-    public interface IJobPositionValidator
+    public interface IJobPositionValidator : IServiceScoped
     {
         Task<bool> Create(JobPosition JobPositiont);
         Task<bool> Update(JobPosition JobPosition);
         Task<bool> Delete(JobPosition JobPosition);
     }
-    public class JobPositionValidator : IJobPositionValidator
+    public class JobPositionValidator:IJobPositionValidator
     {
         public enum ErrorCode
         {
@@ -79,7 +79,7 @@ namespace HRM.Services.MJobPosition
         private async Task<bool> ValidateName(JobPosition JobPosition)
         {
             var oldData = await UOW.JobPositionRepository.Get(JobPosition.Id);
-            if (oldData != null && oldData.Used == true)
+            if (oldData != null && (bool)oldData.Used)
             {
                 if (oldData.Name != JobPosition.Name)
                     JobPosition.AddError(nameof(JobPositionValidator), nameof(JobPosition.Id), ErrorCode.JobPositionInUsed);
@@ -110,7 +110,7 @@ namespace HRM.Services.MJobPosition
         {
             if (await ValidateId(JobPosition))
             {
-                if ((bool)JobPosition.Used)
+                if (JobPosition.Used)
                     JobPosition.AddError(nameof(JobPositionValidator), nameof(JobPosition.Id), ErrorCode.JobPositionInUsed);
             }
             return JobPosition.IsValidated;
