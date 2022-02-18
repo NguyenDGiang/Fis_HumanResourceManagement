@@ -2,3 +2,5 @@ HRM/HRM/bin/
 HRM/HRM/obj/
 HRM/.vs/
 HRM/HRM/Rpc/test/TestController.cs
+HRM/HRM.Tests/bin/
+HRM/HRM.Tests/obj/
