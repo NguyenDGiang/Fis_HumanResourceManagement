@@ -37,8 +37,10 @@ namespace HRM.Rpc.chucvu
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
+            if (!await HasPermission(ChucVu_ChucVuDTO.Id))
+                return StatusCode(403);
 
-            System.Console.WriteLine(JsonConvert.SerializeObject(ChucVu_ChucVuDTO));
+            // System.Console.WriteLine(JsonConvert.SerializeObject(ChucVu_ChucVuDTO));
 
             ChucVu ChucVu = ConvertDTOToEntity(ChucVu_ChucVuDTO);
             ChucVu = await ChucVuService.Create(ChucVu);
@@ -55,6 +57,8 @@ namespace HRM.Rpc.chucvu
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
+            if (!await HasPermission(ChucVu_ChucVuDTO.Id))
+                return StatusCode(403);
 
             ChucVu ChucVu = await ChucVuService.Get(ChucVu_ChucVuDTO.Id);
             return new ChucVu_ChucVuDTO(ChucVu);
@@ -65,6 +69,7 @@ namespace HRM.Rpc.chucvu
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
+
 
             ChucVuFilter ChucVuFilter = ConvertFilterDTOToFilterEntity(ChucVu_ChucVuFilterDTO);
             ChucVuFilter = ChucVuService.ToFilter(ChucVuFilter);
@@ -79,6 +84,8 @@ namespace HRM.Rpc.chucvu
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
+            if (!await HasPermission(ChucVu_ChucVuDTO.Id))
+                return StatusCode(403);
 
             ChucVu ChucVu = ConvertDTOToEntity(ChucVu_ChucVuDTO);
             ChucVu = await ChucVuService.Update(ChucVu);
@@ -93,6 +100,8 @@ namespace HRM.Rpc.chucvu
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
+            if (!await HasPermission(ChucVu_ChucVuDTO.Id))
+                return StatusCode(403);
 
             ChucVu ChucVu = ConvertDTOToEntity(ChucVu_ChucVuDTO);
             ChucVu = await ChucVuService.Delete(ChucVu);
@@ -122,6 +131,23 @@ namespace HRM.Rpc.chucvu
             List<ChucVu> ChucVus = await ChucVuService.List(ChucVuFilter);
             ChucVus = await ChucVuService.BulkDelete(ChucVus);
 
+            return true;
+        }
+
+        private async Task<bool> HasPermission(long Id)
+        {
+            ChucVuFilter ChucVuFilter = new ChucVuFilter();
+            if (Id == 0)
+            {
+
+            }
+            else
+            {
+                ChucVuFilter.Id = new IdFilter { Equal = Id };
+                int count = await ChucVuService.Count(ChucVuFilter);
+                if (count == 0)
+                    return false;
+            }
             return true;
         }
 

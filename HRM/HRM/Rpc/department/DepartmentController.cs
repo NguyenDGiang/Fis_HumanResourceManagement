@@ -35,6 +35,8 @@ namespace HRM.Rpc.department
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
+            if (!await HasPermission(Department_DepartmentDTO.Id))
+                return StatusCode(403);
 
             Department Department = ConvertDTOToEntity(Department_DepartmentDTO);
             Department = await DepartmentService.Create(Department);
@@ -45,7 +47,7 @@ namespace HRM.Rpc.department
             else
                 return BadRequest(Department_DepartmentDTO);
 
-                // return Department_DepartmentDTO;
+            // return Department_DepartmentDTO;
         }
 
         [Route(DepartmentRoute.Get), HttpPost]
@@ -53,6 +55,9 @@ namespace HRM.Rpc.department
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
+            if (!await HasPermission(Department_DepartmentDTO.Id))
+                return StatusCode(403);
+
             Department Department = ConvertDTOToEntity(Department_DepartmentDTO);
             Department = await DepartmentService.Get(Department.Id);
 
@@ -78,6 +83,9 @@ namespace HRM.Rpc.department
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
+            if (!await HasPermission(Department_DepartmentDTO.Id))
+                return StatusCode(403);
+
 
             Department Department = ConvertDTOToEntity(Department_DepartmentDTO);
             Department = await DepartmentService.Update(Department);
@@ -90,6 +98,8 @@ namespace HRM.Rpc.department
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
+            if (!await HasPermission(Department_DepartmentDTO.Id))
+                return StatusCode(403);
 
             Department Department = ConvertDTOToEntity(Department_DepartmentDTO);
             Department = await DepartmentService.Delete(Department);
@@ -113,6 +123,23 @@ namespace HRM.Rpc.department
             List<Department> Departments = await DepartmentService.List(DepartmentFilter);
             await DepartmentService.BulkDelete(Departments);
 
+            return true;
+        }
+
+        private async Task<bool> HasPermission(long Id)
+        {
+            DepartmentFilter DepartmentFilter = new DepartmentFilter();
+            if (Id == 0)
+            {
+
+            }
+            else
+            {
+                DepartmentFilter.Id = new IdFilter { Equal = Id };
+                int count = await DepartmentService.Count(DepartmentFilter);
+                if (count == 0)
+                    return false;
+            }
             return true;
         }
 

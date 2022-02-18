@@ -38,6 +38,9 @@ namespace HRM.Rpc.candidate
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
 
+            if (!await HasPermission(Candidate_CandidateDTO.Id))
+                return StatusCode(403);
+
             Candidate Candidate = ConvertDTOToEntity(Candidate_CandidateDTO);
             Candidate = await CandidateService.Create(Candidate);
             Candidate_CandidateDTO = new Candidate_CandidateDTO(Candidate);
@@ -56,6 +59,9 @@ namespace HRM.Rpc.candidate
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
+            if (!await HasPermission(Candidate_CandidateDTO.Id))
+                return StatusCode(403);
+
             Candidate Candidate = ConvertDTOToEntity(Candidate_CandidateDTO);
             Candidate = await CandidateService.Get(Candidate_CandidateDTO.Id);
 
@@ -83,6 +89,8 @@ namespace HRM.Rpc.candidate
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
+            if (!await HasPermission(Candidate_CandidateDTO.Id))
+                return StatusCode(403);
 
             Candidate Candidate = ConvertDTOToEntity(Candidate_CandidateDTO);
             Candidate = await CandidateService.Update(Candidate);
@@ -95,6 +103,8 @@ namespace HRM.Rpc.candidate
         {
             if (!ModelState.IsValid)
                 throw new BindException(ModelState);
+            if (!await HasPermission(Candidate_CandidateDTO.Id))
+                return StatusCode(403);
 
             Candidate Candidate = ConvertDTOToEntity(Candidate_CandidateDTO);
             Candidate = await CandidateService.Delete(Candidate);
@@ -120,6 +130,23 @@ namespace HRM.Rpc.candidate
             List<Candidate> Candidates = await CandidateService.List(CandidateFilter);
             await CandidateService.BulkDelete(Candidates);
 
+            return true;
+        }
+
+        private async Task<bool> HasPermission(long Id)
+        {
+            CandidateFilter CandidateFilter = new CandidateFilter();
+            if (Id == 0)
+            {
+
+            }
+            else
+            {
+                CandidateFilter.Id = new IdFilter { Equal = Id };
+                int count = await CandidateService.Count(CandidateFilter);
+                if (count == 0)
+                    return false;
+            }
             return true;
         }
 
