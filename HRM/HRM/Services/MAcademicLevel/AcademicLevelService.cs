@@ -44,8 +44,10 @@ namespace HRM.Services.MAcademicLevel
             catch (System.Exception ex)
             {
                 System.Console.WriteLine(ex);
-                throw;
+                // throw;
             }
+            return null;
+
         }
 
         public Task<List<AcademicLevel>> BulkInsert(List<AcademicLevel> AcademicLevels)
@@ -87,8 +89,9 @@ namespace HRM.Services.MAcademicLevel
             catch (System.Exception ex)
             {
                 System.Console.WriteLine(ex);
-                throw;
+                // throw;
             }
+            return null;
         }
 
         public async Task<AcademicLevel> Delete(AcademicLevel AcademicLevel)
@@ -107,8 +110,10 @@ namespace HRM.Services.MAcademicLevel
             {
                 System.Console.WriteLine(ex);
 
-                throw;
+                // throw;
             }
+            return null;
+
         }
 
         public async Task<AcademicLevel> Get(long Id)
@@ -121,8 +126,10 @@ namespace HRM.Services.MAcademicLevel
             catch (System.Exception ex)
             {
                 System.Console.WriteLine("Get\t: " + ex);
-                throw;
+                // throw;
             }
+            return null;
+
         }
 
         public async Task<List<AcademicLevel>> List(AcademicLevelFilter AcademicLevelFilter)
@@ -135,9 +142,10 @@ namespace HRM.Services.MAcademicLevel
             catch (System.Exception ex)
             {
                 System.Console.WriteLine(ex);
-
-                throw;
+                // throw;
             }
+            return null;
+
         }
 
         public AcademicLevelFilter ToFilter(AcademicLevelFilter AcademicLevelFilter)
@@ -159,9 +167,10 @@ namespace HRM.Services.MAcademicLevel
             catch (System.Exception ex)
             {
                 System.Console.WriteLine(ex);
+                // throw;
 
-                throw;
             }
+            return null;
         }
     }
 }

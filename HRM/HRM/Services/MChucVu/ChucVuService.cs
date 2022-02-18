@@ -45,11 +45,13 @@ namespace HRM.Services.MChucVu
 
                 return ChucVus;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
-                throw;
+                System.Console.WriteLine(ex);
+                // throw;
             }
+            return null;
+
         }
 
         public Task<List<ChucVu>> BulkInsert(List<ChucVu> ChucVus)
@@ -92,8 +94,8 @@ namespace HRM.Services.MChucVu
             {
 
                 System.Console.WriteLine("ChucVuService -> Create: " + ex);
-                throw;
             }
+            return null;
         }
 
         public async Task<ChucVu> Delete(ChucVu ChucVu)
@@ -108,11 +110,13 @@ namespace HRM.Services.MChucVu
 
                 return ChucVu;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
-                throw;
+                System.Console.WriteLine(ex);
+                // throw;
             }
+            return null;
+
         }
 
         public async Task<ChucVu> Get(long Id)
@@ -133,11 +137,13 @@ namespace HRM.Services.MChucVu
                 return ChucVus;
 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
-                throw;
+                System.Console.WriteLine(ex);
+                // throw;
             }
+            return null;
+
         }
 
         public ChucVuFilter ToFilter(ChucVuFilter ChucVuFilter)

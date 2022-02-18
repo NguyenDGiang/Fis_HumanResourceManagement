@@ -23,12 +23,16 @@ namespace HRM.Services.MDepartment
     public class DepartmentService : IDepartmentService
     {
         private IUOW UOW;
-        public DepartmentService(IUOW UOW)
+        private IDepartmentValidator DepartmentValidator;
+        public DepartmentService(IUOW UOW, IDepartmentValidator DepartmentValidator)
         {
             this.UOW = UOW;
+            this.DepartmentValidator = DepartmentValidator;
         }
         public async Task<List<Department>> BulkDelete(List<Department> Departments)
         {
+            if (!await DepartmentValidator.BulkDelete(Departments))
+                return Departments;
             try
             {
                 await UOW.DepartmentRepository.BulkDelete(Departments);
@@ -41,8 +45,9 @@ namespace HRM.Services.MDepartment
             catch (System.Exception ex)
             {
                 System.Console.WriteLine(ex);
-                throw;
+                // throw;
             }
+            return null;
         }
 
         public Task<List<Department>> BulkInsert(List<Department> Departments)
@@ -72,6 +77,8 @@ namespace HRM.Services.MDepartment
 
         public async Task<Department> Create(Department Department)
         {
+            if (!await DepartmentValidator.Create(Department))
+                return Department;
             try
             {
                 await UOW.DepartmentRepository.Create(Department);
@@ -81,13 +88,17 @@ namespace HRM.Services.MDepartment
             catch (System.Exception ex)
             {
                 System.Console.WriteLine(ex);
-                return Department;
+                // return Department;
 
             }
+            return null;
         }
 
         public async Task<Department> Delete(Department Department)
         {
+            if (!await DepartmentValidator.Delete(Department))
+                return Department;
+
             try
             {
                 await UOW.DepartmentRepository.Delete(Department);
@@ -95,23 +106,37 @@ namespace HRM.Services.MDepartment
                 Department = Departments.FirstOrDefault();
                 return Department;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
-                throw;
+                System.Console.WriteLine(ex);
+                // throw;
             }
+            return null;
+
         }
 
         public async Task<Department> Get(long Id)
         {
             Department Department = await UOW.DepartmentRepository.Get(Id);
+            if (Department == null)
+                return null;
             return Department;
         }
 
         public async Task<List<Department>> List(DepartmentFilter DepartmentFilter)
         {
-            List<Department> Departments = await UOW.DepartmentRepository.List(DepartmentFilter);
-            return Departments;
+            try
+            {
+                List<Department> Departments = await UOW.DepartmentRepository.List(DepartmentFilter);
+                return Departments;
+
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex);
+                // throw;
+            }
+            return null;
         }
 
         public DepartmentFilter ToFilter(DepartmentFilter DepartmentFilter)
@@ -124,14 +149,16 @@ namespace HRM.Services.MDepartment
             try
             {
                 await UOW.DepartmentRepository.Update(Department);
-                Department = await UOW.DepartmentRepository.Get(Department.Id);
-
+                // Department = await UOW.DepartmentRepository.Get(Department.Id);
+                Department = (await UOW.DepartmentRepository.List(new List<long> { Department.Id })).FirstOrDefault();
                 return Department;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                throw;
+                System.Console.WriteLine(ex);
+                // throw;
             }
+            return null;
         }
     }
 }
